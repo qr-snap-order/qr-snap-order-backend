@@ -1,0 +1,17 @@
+type Organization {
+    id: ID!
+
+    name: String!
+
+    users: [User!]! @belongsToMany
+
+    shops: [Shop!]! @hasMany
+
+    staffs: [Staff!]! @hasMany
+}
+
+extend type Query {
+    organization(
+        id: ID! @eq @rules(apply: ["required", "uuid"])
+    ): Organization @find
+}

@@ -1,0 +1,25 @@
+type Staff {
+    id: ID!
+
+    name: String!
+
+    organization_id: ID!
+
+    organization: Organization!
+
+    shops: [Shop!]! @belongsToMany
+}
+
+extend type Query {
+    staff(
+        id: ID! @eq @rules(apply: ["required", "uuid"])
+    ): Staff @find
+}
+
+extend type Mutation {
+    createStaff(
+        name: String! @rules(apply: ["required", "string", "max:255"])
+
+        organization_id: ID! @rules(apply: ["required", "uuid", "exists:organizations,id"])
+    ): Staff @create
+}

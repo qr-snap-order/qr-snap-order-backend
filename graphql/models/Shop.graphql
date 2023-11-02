@@ -1,0 +1,25 @@
+type Shop {
+    id: ID!
+
+    name: String!
+
+    organization_id: ID!
+
+    organization: Organization!
+
+    staffs: [Staff!]! @belongsToMany
+}
+
+extend type Query {
+    shop(
+        id: ID! @eq @rules(apply: ["required", "uuid"])
+    ): Shop @find
+}
+
+extend type Mutation {
+    createShop(
+        name: String! @rules(apply: ["required", "string", "max:255"])
+
+        organization_id: ID! @rules(apply: ["required", "uuid", "exists:organizations,id"])
+    ): Shop @create
+}
