@@ -22,4 +22,10 @@ extend type Mutation {
 
         organization_id: ID! @rules(apply: ["required", "uuid", "exists:organizations,id"])
     ): Shop @create
+
+    updateShop(
+        id: ID! @rules(apply: ["required", "uuid"])
+
+        name: String @rules(apply: ["sometimes", "required", "string", "max:255"])
+    ): Shop @update
 }
