@@ -11,6 +11,10 @@ type Shop {
 }
 
 extend type Query {
+    shops(
+        organization_id: ID! @eq @rules(apply: ["required", "uuid"])
+    ): [Shop!]! @all @orderBy(column: "created_at", direction: DESC) @orderBy(column: "id", direction: DESC)
+
     shop(
         id: ID! @eq @rules(apply: ["required", "uuid"])
     ): Shop @find
@@ -28,4 +32,8 @@ extend type Mutation {
 
         name: String @rules(apply: ["sometimes", "required", "string", "max:255"])
     ): Shop @update
+
+    deleteShop(
+        id: ID! @eq @rules(apply: ["required", "uuid"])
+    ): Shop @delete
 }
