@@ -14,8 +14,8 @@
 erDiagram
     users }|--o{ organizations : ""
     organizations ||--o{ shops : ""
-    organizations ||--o{ staffs : ""
-    shops }o--o{ staffs : ""
+    organizations ||--o{ employees : ""
+    shops }o--o{ employees : ""
 ```
 
 ```mermaid
@@ -41,7 +41,7 @@ query {
             id
             name
         }
-        staffs {
+        employees {
             id
             name
         }
@@ -61,7 +61,28 @@ mutation {
             id
             name
         }
-        staffs {
+        employees {
+            id
+            name
+        }
+    }
+}
+
+mutation {
+    updateShop(
+        id: "00000000-0000-0000-0000-000000000000"
+        name: "hoge"
+        employees: {
+            sync: ["00000000-0000-0000-0000-000000000000"]
+        }
+    ) {
+        id
+        name
+        organization {
+            id
+            name
+        }
+        employees {
             id
             name
         }

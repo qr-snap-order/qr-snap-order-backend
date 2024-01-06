@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Models\Concerns\Staff;
+namespace App\Models\Concerns\Employee;
 
 use App\Models\Organization;
 use App\Models\Shop;
-use App\Models\Staff;
+use App\Models\Employee;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * @mixin Staff
+ * @mixin Employee
  */
 trait HasRelation
 {

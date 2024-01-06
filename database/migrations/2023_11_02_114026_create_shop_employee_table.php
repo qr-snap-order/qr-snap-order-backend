@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('staff', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->foreignUuid('organization_id')->constrained();
-            $table->string('name', 255);
+        Schema::create('employee_shop', function (Blueprint $table) {
+            $table->foreignUuid('shop_id')->constrained();
+            $table->foreignUuid('employee_id')->constrained();
+            $table->primary(['shop_id', 'employee_id']);
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('staff');
+        Schema::dropIfExists('employee_shop');
     }
 };

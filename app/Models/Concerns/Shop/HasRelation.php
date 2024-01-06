@@ -4,7 +4,7 @@ namespace App\Models\Concerns\Shop;
 
 use App\Models\Organization;
 use App\Models\Shop;
-use App\Models\Staff;
+use App\Models\Employee;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -18,8 +18,8 @@ trait HasRelation
         return $this->belongsTo(Organization::class);
     }
 
-    public function staffs(): BelongsToMany
+    public function employees(): BelongsToMany
     {
-        return $this->belongsToMany(Staff::class);
+        return $this->belongsToMany(Employee::class);
     }
 }

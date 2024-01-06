@@ -1,4 +1,4 @@
-type Staff {
+type Employee {
     id: ID!
 
     name: String!
@@ -11,15 +11,15 @@ type Staff {
 }
 
 extend type Query {
-    staff(
+    employee(
         id: ID! @eq @rules(apply: ["required", "uuid"])
-    ): Staff @find
+    ): Employee @find
 }
 
 extend type Mutation {
-    createStaff(
+    createEmployee(
         name: String! @rules(apply: ["required", "string", "max:255"])
 
         organization_id: ID! @rules(apply: ["required", "uuid", "exists:organizations,id"])
-    ): Staff @create
+    ): Employee @create
 }

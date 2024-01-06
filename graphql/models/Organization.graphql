@@ -7,7 +7,7 @@ type Organization {
 
     shops: [Shop!]! @hasMany
 
-    staffs: [Staff!]! @hasMany
+    employees: [Employee!]! @hasMany
 }
 
 extend type Query {

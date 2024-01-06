@@ -7,7 +7,15 @@ type Shop {
 
     organization: Organization!
 
-    staffs: [Staff!]! @belongsToMany
+    employees: [Employee!]! @belongsToMany
+}
+
+input CreateShopEmployees {
+    connect: [ID!] @rules(apply: ["required", "uuid", "exists:employees,id"]) @rulesForArray(apply: ["max:1024"])
+}
+
+input UpdateShopEmployees {
+    sync: [ID!] @rules(apply: ["required", "uuid", "exists:employees,id"]) @rulesForArray(apply: ["max:1024"])
 }
 
 extend type Query {
@@ -25,12 +33,16 @@ extend type Mutation {
         name: String! @rules(apply: ["required", "string", "max:255"])
 
         organization_id: ID! @rules(apply: ["required", "uuid", "exists:organizations,id"])
+
+        employees: CreateShopEmployees
     ): Shop @create
 
     updateShop(
         id: ID! @rules(apply: ["required", "uuid"])
 
         name: String @rules(apply: ["sometimes", "required", "string", "max:255"])
+
+        employees: UpdateShopEmployees
     ): Shop @update
 
     deleteShop(
