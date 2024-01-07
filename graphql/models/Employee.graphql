@@ -11,6 +11,10 @@ type Employee {
 }
 
 extend type Query {
+    employees(
+        organization_id: ID! @eq @rules(apply: ["required", "uuid"])
+    ): [Employee!]! @all @orderBy(column: "id", direction: DESC)
+
     employee(
         id: ID! @eq @rules(apply: ["required", "uuid"])
     ): Employee @find
