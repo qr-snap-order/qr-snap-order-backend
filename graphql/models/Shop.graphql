@@ -7,7 +7,7 @@ type Shop {
 
     organization: Organization!
 
-    employees: [Employee!]! @belongsToMany
+    employees: [Employee!]! @belongsToMany @orderBy(column: "id", direction: DESC)
 }
 
 input CreateShopEmployees {
@@ -21,7 +21,7 @@ input UpdateShopEmployees {
 extend type Query {
     shops(
         organization_id: ID! @eq @rules(apply: ["required", "uuid"])
-    ): [Shop!]! @all @orderBy(column: "created_at", direction: DESC) @orderBy(column: "id", direction: DESC)
+    ): [Shop!]! @all @orderBy(column: "id", direction: DESC)
 
     shop(
         id: ID! @eq @rules(apply: ["required", "uuid"])

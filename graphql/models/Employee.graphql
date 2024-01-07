@@ -7,7 +7,7 @@ type Employee {
 
     organization: Organization!
 
-    shops: [Shop!]! @belongsToMany
+    shops: [Shop!]! @belongsToMany @orderBy(column: "id", direction: DESC)
 }
 
 extend type Query {
