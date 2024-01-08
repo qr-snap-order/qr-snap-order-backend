@@ -8,6 +8,16 @@
 ./vendor/bin/sail php artisan migrate:fresh --seed --database=pgsql
 ```
 
+## Test
+
+```
+./vendor/bin/sail test
+```
+
+```
+./vendor/bin/sail test tests/Feature/GraphQL/Mutations/LoginTest.php
+```
+
 ## ER
 
 ```mermaid
