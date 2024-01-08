@@ -18,6 +18,20 @@
 ./vendor/bin/sail test tests/Feature/GraphQL/Mutations/LoginTest.php
 ```
 
+### Use Xdebug
+
+```
+./vendor/bin/sail debug test
+```
+
+```
+./vendor/bin/sail debug test tests/Feature/GraphQL/Mutations/LoginTest.php
+```
+
+### Use Better Pest
+
+`Cmd + Ship + p` > `Better Pest: run`
+
 ## ER
 
 ```mermaid
@@ -129,9 +143,29 @@ https://github.com/m1guelpf/better-pest
     "namespaceResolver.sortOnSave": true,
     // Better Pest
     "better-pest.docker.enable": true,
-    "better-pest.docker.command": "./vendor/bin/sail php",
+    "better-pest.docker.command": "./vendor/bin/sail",
+    "better-pest.pestBinary": "debug test",
     "better-pest.docker.paths": {
         "your workspace": "/var/www/html" // set your workspace
     },
+}
+```
+
+### .vscode/launch.json
+
+```json
+{
+    // IntelliSense を使用して利用可能な属性を学べます。
+    // 既存の属性の説明をホバーして表示します。
+    // 詳細情報は次を確認してください: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Listen for Sail Xdebug",
+            "type": "php",
+            "request": "launch",
+            "port": 9003,
+        }
+    ]
 }
 ```
