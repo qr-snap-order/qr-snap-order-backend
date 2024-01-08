@@ -28,7 +28,7 @@
 ./vendor/bin/sail debug test tests/Feature/GraphQL/Mutations/LoginTest.php
 ```
 
-### Use Better Pest
+### Use Better Pest (VSCode Extension)
 
 `Cmd + Ship + p` > `Better Pest: run`
 
@@ -114,20 +114,15 @@ mutation {
 }
 ```
 
-## VScode Extensions
+## Recommend VScode Settings
 
-### PHP Intelephense
+### Extensions (@recommended)
 
-https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client
-
-### PHP Namespace Resolver
-
-https://github.com/MehediDracula/PHP-Namespace-Resolver
-
-### Better Pest
-
-https://github.com/m1guelpf/better-pest
-
+| extension              | purpose                         | link                                                                                    |
+| ---------------------- | ------------------------------- | --------------------------------------------------------------------------------------- |
+| PHP Intelephense       | PHP開発支援および、フォーマット | https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client |
+| PHP Namespace Resolver | フォーマット（import順序）      | https://github.com/MehediDracula/PHP-Namespace-Resolver                                 |
+| Better Pest            | GUIでのテスト実行               | https://github.com/m1guelpf/better-pest                                                 |
 
 ### .vscode/settings.json
 
