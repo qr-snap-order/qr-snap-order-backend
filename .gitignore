@@ -19,3 +19,7 @@ yarn-error.log
 /.vscode/*
 !.vscode/extensions.json
 !.vscode/launch.json
+
+_ide_helper.php
+_ide_helper_models.php
+.phpstorm.meta.php
