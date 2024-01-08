@@ -89,3 +89,39 @@ mutation {
     }
 }
 ```
+
+## VScode Extensions
+
+### PHP Intelephense
+
+https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client
+
+### PHP Namespace Resolver
+
+https://github.com/MehediDracula/PHP-Namespace-Resolver
+
+### Better Pest
+
+https://github.com/m1guelpf/better-pest
+
+
+### .vscode/settings.json
+
+```json
+{
+    "editor.formatOnSave": true,
+    "[php]": {
+        // PHP Intelephense
+        "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+    },
+    // PHP Namespace Resolver
+    "namespaceResolver.sortAlphabetically": true,
+    "namespaceResolver.sortOnSave": true,
+    // Better Pest
+    "better-pest.docker.enable": true,
+    "better-pest.docker.command": "./vendor/bin/sail php",
+    "better-pest.docker.paths": {
+        "your workspace": "/var/www/html" // set your workspace
+    },
+}
+```
