@@ -184,6 +184,10 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+        'DbRole' => App\Facades\DbRole::class,
+        'DbPolicy' => App\Facades\DbPolicy::class,
+        'DbConfig' => App\Facades\DbConfig::class,
+        'TenantIsolation' => App\Facades\TenantIsolation::class,
     ])->toArray(),
 
 ];

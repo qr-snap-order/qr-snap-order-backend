@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Employee;
 use App\Models\Organization;
 use App\Models\Shop;
-use App\Models\Employee;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -21,7 +21,7 @@ class EmployeeSeeder extends Seeder
 
         Employee::factory()
             ->for($organization)
-            ->hasAttached($shop)
+            ->hasAttached($shop, ['organization_id' => '00000000-0000-0000-0000-000000000000'])
             ->forEachSequence(
                 [
                     'id' => '00000000-0000-0000-0000-000000000000',
