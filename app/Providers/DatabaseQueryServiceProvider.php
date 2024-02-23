@@ -19,10 +19,21 @@ class DatabaseQueryServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        if (config('logging.sql.enable') !== true) {
-            return;
-        }
+        //
+    }
 
+    /**
+     * Bootstrap services.
+     */
+    public function boot(): void
+    {
+        if (config('logging.sql.enable') === true) {
+            $this->startLoggingForDatabaseQuery();
+        }
+    }
+
+    protected function startLoggingForDatabaseQuery(): void
+    {
         DB::listen(static function (QueryExecuted $event) {
             $sql = $event->connection
                 ->getQueryGrammar()
@@ -41,13 +52,5 @@ class DatabaseQueryServiceProvider extends ServiceProvider
         Event::listen(static fn (TransactionBeginning $event) => Log::debug('START TRANSACTION'));
         Event::listen(static fn (TransactionCommitted $event) => Log::debug('COMMIT'));
         Event::listen(static fn (TransactionRolledBack $event) => Log::debug('ROLLBACK'));
-    }
-
-    /**
-     * Bootstrap services.
-     */
-    public function boot(): void
-    {
-        //
     }
 }
