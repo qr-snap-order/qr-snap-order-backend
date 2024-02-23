@@ -16,14 +16,21 @@ npm-debug.log
 yarn-error.log
 /.fleet
 /.idea
+
+# for VSCode
 /.vscode/*
 !.vscode/extensions.json
 !.vscode/launch.json
 
+# for Laravel IDE Helper
 _ide_helper.php
 _ide_helper_models.php
 .phpstorm.meta.php
 
+# for Lighthouse
 schema-directives.graphql
 programmatic-types.graphql
 _lighthouse_ide_helper.php
+
+# for Laravel Passport
+.rnd

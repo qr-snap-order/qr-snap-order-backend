@@ -145,3 +145,11 @@ mutation {
     },
 }
 ```
+
+## Deploy
+
+### アクセストークンを生成するためにPassportが必要とする暗号化キーを生成
+
+```
+php artisan passport:keys
+```
