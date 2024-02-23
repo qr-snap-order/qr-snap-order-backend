@@ -14,13 +14,13 @@ class UpdateSocialProviderUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            if (! Schema::hasColumn('users', 'avatar')) {
+            if (!Schema::hasColumn('users', 'avatar')) {
                 $table->string('avatar')->nullable();
             }
         });
         Schema::create('social_providers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
+            $table->uuid('user_id');
             $table->string('provider')->index();
             $table->string('provider_id')->index();
             $table->timestamps();
