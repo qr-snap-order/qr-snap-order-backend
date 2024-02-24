@@ -1,11 +1,20 @@
 ## Migration
 
+
 ```
-./vendor/bin/sail php artisan migrate --seed --database=pgsql
+./vendor/bin/sail php artisan migrate
 ```
 
 ```
-./vendor/bin/sail php artisan migrate:fresh --seed --database=pgsql
+./vendor/bin/sail php artisan migrate --seed
+```
+
+```
+./vendor/bin/sail php artisan migrate:rollback --step=1
+```
+
+```
+./vendor/bin/sail php artisan migrate:fresh --seed
 ```
 
 ## Test
