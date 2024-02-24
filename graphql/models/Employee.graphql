@@ -10,7 +10,7 @@ type Employee {
     shops: [Shop!]! @belongsToMany @orderBy(column: "id", direction: DESC)
 }
 
-extend type Query {
+extend type Query @guard {
     employees(
         organization_id: ID! @eq @rules(apply: ["required", "uuid"])
     ): [Employee!]! @all @orderBy(column: "id", direction: DESC)
@@ -20,7 +20,7 @@ extend type Query {
     ): Employee @find
 }
 
-extend type Mutation {
+extend type Mutation @guard {
     createEmployee(
         name: String! @rules(apply: ["required", "string", "max:255"])
 
