@@ -148,8 +148,20 @@ mutation {
 
 ## Deploy
 
-### アクセストークンを生成するためにPassportが必要とする暗号化キーを生成
-
+### アクセストークンを生成するためにPassportが必要とする暗号化キーを生成 & OAuth Client作成
 ```
-php artisan passport:keys
+php artisan passport:install
+
+# php artisan passport:keys 暗号化キーを生成のみ行う場合
+```
+
+以下の環境変数に生成したClientを設定。SecretはDBのデータを確認して埋める
+```
+# for passport
+PASSPORT_PERSONAL_ACCESS_CLIENT_ID=1
+PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET=
+
+# for lighthouse-graphql-passport-auth
+PASSPORT_CLIENT_ID=2
+PASSPORT_CLIENT_SECRET=
 ```
