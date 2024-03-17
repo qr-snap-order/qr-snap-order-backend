@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Organization;
 use App\Models\Shop;
+use App\Models\Tenant;
 use App\Models\User;
 use Laravel\Passport\Client;
 use Laravel\Passport\Guards\TokenGuard;
@@ -88,8 +88,8 @@ test('logout mutationを実行すると、Authorizationヘッダーで指定し�
         ->not->toHaveKey('errors')
         ->toHaveKey('data.logout');
 
-    $organization = Organization::factory()->create();
-    $shop = Shop::factory()->for($organization)->create();
+    $tenant = Tenant::factory()->create();
+    $shop = Shop::factory()->for($tenant)->create();
 
     $response = $this->graphQL(
         /** @lang GraphQL */

@@ -12,15 +12,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('organization_user', function (Blueprint $table) {
+        Schema::create('tenant_user', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('organization_id')->default(TenantIsolation::sessionTenantIdExpression())->constrained();
+            $table->foreignUuid('tenant_id')->default(TenantIsolation::sessionTenantIdExpression())->constrained();
             $table->foreignUuid('user_id')->constrained();
-            $table->unique(['organization_id', 'user_id']);
+            $table->unique(['tenant_id', 'user_id']);
             $table->timestamps();
         });
 
-        TenantIsolation::grantIsolationRowAccessToTenantRole('organization_user', 'organization_id');
+        TenantIsolation::grantIsolationRowAccessToTenantRole('tenant_user', 'tenant_id');
     }
 
     /**
@@ -28,8 +28,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        TenantIsolation::revokeIsolationRowAccessFromTenantRole('organization_user');
+        TenantIsolation::revokeIsolationRowAccessFromTenantRole('tenant_user');
 
-        Schema::dropIfExists('organization_user');
+        Schema::dropIfExists('tenant_user');
     }
 };

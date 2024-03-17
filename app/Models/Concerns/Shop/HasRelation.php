@@ -3,8 +3,8 @@
 namespace App\Models\Concerns\Shop;
 
 use App\Models\Employee;
-use App\Models\Organization;
 use App\Models\Shop;
+use App\Models\Tenant;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -13,9 +13,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 trait HasRelation
 {
-    public function organization(): BelongsTo
+    public function tenant(): BelongsTo
     {
-        return $this->belongsTo(Organization::class);
+        return $this->belongsTo(Tenant::class);
     }
 
     public function employees(): BelongsToMany

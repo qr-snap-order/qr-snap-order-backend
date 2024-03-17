@@ -1,4 +1,4 @@
-type Organization {
+type Tenant {
     id: ID!
 
     name: String!
@@ -11,7 +11,7 @@ type Organization {
 }
 
 extend type Query {
-    organization(
+    tenant(
         id: ID! @eq @rules(apply: ["required", "uuid"])
-    ): Organization @find
+    ): Tenant @find
 }

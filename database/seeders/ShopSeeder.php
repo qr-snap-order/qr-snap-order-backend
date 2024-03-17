@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Organization;
 use App\Models\Shop;
+use App\Models\Tenant;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -16,10 +16,10 @@ class ShopSeeder extends Seeder
      */
     public function run(): void
     {
-        $organization = Organization::findOrFail('00000000-0000-0000-0000-000000000000');
+        $tenant = Tenant::findOrFail('00000000-0000-0000-0000-000000000000');
 
         Shop::factory()
-            ->for($organization)
+            ->for($tenant)
             ->forEachSequence(
                 [
                     'id' => '00000000-0000-0000-0000-000000000000',

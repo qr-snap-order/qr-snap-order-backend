@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Organization;
+use App\Models\Tenant;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class OrganizationSeeder extends Seeder
+class TenantSeeder extends Seeder
 {
     use WithoutModelEvents;
 
@@ -15,7 +15,7 @@ class OrganizationSeeder extends Seeder
      */
     public function run(): void
     {
-        Organization::factory([
+        Tenant::factory([
             'id' => '00000000-0000-0000-0000-000000000000',
         ])->create();
     }

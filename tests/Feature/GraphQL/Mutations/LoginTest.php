@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Organization;
 use App\Models\Shop;
+use App\Models\Tenant;
 use App\Models\User;
 use Laravel\Passport\Client;
 use Tests\TestCase;
@@ -29,8 +29,8 @@ beforeEach(function () {
 test('Authorizationヘッダーでアクセストークンを指定していない場合、認証が必要なクエリを実行すると認証エラーになること', function () {
     /** @var TestCase $this */
 
-    $organization = Organization::factory()->create();
-    $shop = Shop::factory()->for($organization)->create();
+    $tenant = Tenant::factory()->create();
+    $shop = Shop::factory()->for($tenant)->create();
 
     $response = $this->graphQL(
         /** @lang GraphQL */
@@ -87,8 +87,8 @@ test('login mutationで有効なアクセストークンを取得できること
 
     $accessToken = $response->json('data.login.access_token');
 
-    $organization = Organization::factory()->create();
-    $shop = Shop::factory()->for($organization)->create();
+    $tenant = Tenant::factory()->create();
+    $shop = Shop::factory()->for($tenant)->create();
 
     // トークンの有効・無効をチェックしたいので、内部に認証ユーザーが保持されていないことを確認しておく
     $tokenGuard = auth()->guard('api');

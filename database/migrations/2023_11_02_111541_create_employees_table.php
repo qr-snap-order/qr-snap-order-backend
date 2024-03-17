@@ -14,12 +14,12 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('organization_id')->default(TenantIsolation::sessionTenantIdExpression())->constrained();
+            $table->foreignUuid('tenant_id')->default(TenantIsolation::sessionTenantIdExpression())->constrained();
             $table->string('name', 255);
             $table->timestamps();
         });
 
-        TenantIsolation::grantIsolationRowAccessToTenantRole('employees', 'organization_id');
+        TenantIsolation::grantIsolationRowAccessToTenantRole('employees', 'tenant_id');
     }
 
     /**

@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 trait HasRelation
 {
-    public function organizations(): BelongsToMany
+    public function tenants(): BelongsToMany
     {
-        return $this->belongsToMany(Organization::class);
+        return $this->belongsToMany(Tenant::class);
     }
 }

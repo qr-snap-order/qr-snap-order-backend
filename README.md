@@ -45,9 +45,9 @@
 
 ```mermaid
 erDiagram
-    users }|--o{ organizations : ""
-    organizations ||--o{ shops : ""
-    organizations ||--o{ employees : ""
+    users }|--o{ tenants : ""
+    tenants ||--o{ shops : ""
+    tenants ||--o{ employees : ""
     shops }o--o{ employees : ""
 ```
 
@@ -63,7 +63,7 @@ http://localhost/graphiql
 
 ```graphql
 query {
-    organization(id: "00000000-0000-0000-0000-000000000000") {
+    tenant(id: "00000000-0000-0000-0000-000000000000") {
         id
         name
         users {
@@ -86,11 +86,11 @@ query {
 mutation {
     createShop(
         name: "hoge"
-        organization_id: "00000000-0000-0000-0000-000000000000"
+        tenant_id: "00000000-0000-0000-0000-000000000000"
     ) {
         id
         name
-        organization {
+        tenant {
             id
             name
         }
@@ -111,7 +111,7 @@ mutation {
     ) {
         id
         name
-        organization {
+        tenant {
             id
             name
         }

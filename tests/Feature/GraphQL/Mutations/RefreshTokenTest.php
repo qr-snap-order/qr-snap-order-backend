@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Organization;
 use App\Models\Shop;
+use App\Models\Tenant;
 use App\Models\User;
 use Laravel\Passport\Client;
 use Tests\TestCase;
@@ -87,8 +87,8 @@ test('refreshToken mutationで有効な新しいアクセストークンを取�
 
     $accessToken = $response->json('data.refreshToken.access_token');
 
-    $organization = Organization::factory()->create();
-    $shop = Shop::factory()->for($organization)->create();
+    $tenant = Tenant::factory()->create();
+    $shop = Shop::factory()->for($tenant)->create();
 
     // トークンの有効・無効をチェックしたいので、内部に認証ユーザーが保持されていないことを確認しておく
     $tokenGuard = auth()->guard('api');
@@ -176,8 +176,8 @@ test('refreshToken mutationを実行すると、古いアクセストークン�
         ->json()
         ->not->toHaveKey('errors');
 
-    $organization = Organization::factory()->create();
-    $shop = Shop::factory()->for($organization)->create();
+    $tenant = Tenant::factory()->create();
+    $shop = Shop::factory()->for($tenant)->create();
 
     // トークンの有効・無効をチェックしたいので、内部に認証ユーザーが保持されていないことを確認しておく
     $tokenGuard = auth()->guard('api');

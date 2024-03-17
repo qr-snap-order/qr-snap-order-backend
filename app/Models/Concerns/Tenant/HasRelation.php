@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Models\Concerns\Organization;
+namespace App\Models\Concerns\Tenant;
 
-use App\Models\Organization;
-use App\Models\Shop;
 use App\Models\Employee;
+use App\Models\Shop;
+use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @mixin Organization
+ * @mixin Tenant
  */
 trait HasRelation
 {

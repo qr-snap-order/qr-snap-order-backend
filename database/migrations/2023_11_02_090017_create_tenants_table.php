@@ -12,13 +12,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('organizations', function (Blueprint $table) {
+        Schema::create('tenants', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name', 255);
             $table->timestamps();
         });
 
-        TenantIsolation::grantIsolationRowAccessToTenantRole('organizations', 'id');
+        TenantIsolation::grantIsolationRowAccessToTenantRole('tenants', 'id');
     }
 
     /**
@@ -26,8 +26,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        TenantIsolation::revokeIsolationRowAccessFromTenantRole('organizations');
+        TenantIsolation::revokeIsolationRowAccessFromTenantRole('tenants');
 
-        Schema::dropIfExists('organizations');
+        Schema::dropIfExists('tenants');
     }
 };

@@ -13,14 +13,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('employee_shop', function (Blueprint $table) {
-            $table->foreignUuid('organization_id')->default(TenantIsolation::sessionTenantIdExpression())->constrained();
+            $table->foreignUuid('tenant_id')->default(TenantIsolation::sessionTenantIdExpression())->constrained();
             $table->foreignUuid('shop_id')->constrained();
             $table->foreignUuid('employee_id')->constrained();
             $table->primary(['shop_id', 'employee_id']);
             $table->timestamps();
         });
 
-        TenantIsolation::grantIsolationRowAccessToTenantRole('employee_shop', 'organization_id');
+        TenantIsolation::grantIsolationRowAccessToTenantRole('employee_shop', 'tenant_id');
     }
 
     /**
