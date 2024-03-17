@@ -2,16 +2,17 @@
 
 namespace App\Models\Concerns\User;
 
+use App\Models\Tenant;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @mixin User
  */
 trait HasRelation
 {
-    public function tenants(): BelongsToMany
+    public function tenant(): BelongsTo
     {
-        return $this->belongsToMany(Tenant::class);
+        return $this->belongsTo(Tenant::class);
     }
 }

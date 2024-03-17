@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('tenant_id')->default(TenantIsolation::sessionTenantIdExpression())->constrained();
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
@@ -20,6 +21,8 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+        TenantIsolation::grantIsolationRowAccessToTenantRole('users', 'tenant_id');
     }
 
     /**
@@ -27,6 +30,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        TenantIsolation::revokeIsolationRowAccessFromTenantRole('users');
+
         Schema::dropIfExists('users');
     }
 };
