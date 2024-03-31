@@ -41,87 +41,16 @@
 
 `Cmd + Ship + p` > `Better Pest: run`
 
-## ER
+## 設計
 
-```mermaid
-erDiagram
-    users }|--o{ tenants : ""
-    tenants ||--o{ shops : ""
-    tenants ||--o{ employees : ""
-    shops }o--o{ employees : ""
-```
-
-```mermaid
-erDiagram
-    menus ||--o{ menu_categories : ""
-    menu_categories ||--o{ menu_items : ""
-```
+[ER](docs/er.md)
 
 ## Query And Mutation
 
+実行環境
 http://localhost/graphiql
 
-```graphql
-query {
-    tenant(id: "00000000-0000-0000-0000-000000000000") {
-        id
-        name
-        users {
-            id
-            name
-        }
-        shops {
-            id
-            name
-        }
-        employees {
-            id
-            name
-        }
-    }
-}
-```
-
-```graphql
-mutation {
-    createShop(
-        name: "hoge"
-        tenant_id: "00000000-0000-0000-0000-000000000000"
-    ) {
-        id
-        name
-        tenant {
-            id
-            name
-        }
-        employees {
-            id
-            name
-        }
-    }
-}
-
-mutation {
-    updateShop(
-        id: "00000000-0000-0000-0000-000000000000"
-        name: "hoge"
-        employees: {
-            sync: ["00000000-0000-0000-0000-000000000000"]
-        }
-    ) {
-        id
-        name
-        tenant {
-            id
-            name
-        }
-        employees {
-            id
-            name
-        }
-    }
-}
-```
+[サンプル](docs/sample-query.md)
 
 ## Recommend VScode Settings
 
