@@ -8,7 +8,7 @@ test('hello query', function () {
 
     $tenant = Tenant::factory()->create();
 
-    $response = $this->graphQL(
+    $response = $this->domain($tenant)->graphQL(
         /** @lang GraphQL */
         'query {
             hello

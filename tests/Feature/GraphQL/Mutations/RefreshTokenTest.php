@@ -29,15 +29,17 @@ beforeEach(function () {
 test('refreshToken mutationで有効な新しいアクセストークンを取得できること', function () {
     /** @var TestCase $this */
 
+    $tenant = Tenant::factory()->create();
+
     $email = 'hoge@example.com';
     $password = '1234';
 
-    User::factory()->create([
+    User::factory()->for($tenant)->create([
         'email' => $email,
         'password' => bcrypt($password),
     ]);
 
-    $response = $this->graphQL(
+    $response = $this->domain($tenant)->graphQL(
         /** @lang GraphQL */
         'mutation ($email: String!, $password: String!) {
             login(
@@ -63,7 +65,7 @@ test('refreshToken mutationで有効な新しいアクセストークンを取�
 
     $refreshToken = $response->json('data.login.refresh_token');
 
-    $response = $this->graphQL(
+    $response = $this->domain($tenant)->graphQL(
         /** @lang GraphQL */
         'mutation ($refreshToken: String!) {
             refreshToken(
@@ -87,14 +89,13 @@ test('refreshToken mutationで有効な新しいアクセストークンを取�
 
     $accessToken = $response->json('data.refreshToken.access_token');
 
-    $tenant = Tenant::factory()->create();
     $shop = Shop::factory()->for($tenant)->create();
 
     // トークンの有効・無効をチェックしたいので、内部に認証ユーザーが保持されていないことを確認しておく
     $tokenGuard = auth()->guard('api');
     assert(!$tokenGuard->user());
 
-    $response = $this->graphQL(
+    $response = $this->domain($tenant)->graphQL(
         /** @lang GraphQL */
         'query ($id: ID!) {
             shop(id: $id) {
@@ -119,15 +120,17 @@ test('refreshToken mutationで有効な新しいアクセストークンを取�
 test('refreshToken mutationを実行すると、古いアクセストークンを無効になること', function () {
     /** @var TestCase $this */
 
+    $tenant = Tenant::factory()->create();
+
     $email = 'hoge@example.com';
     $password = '1234';
 
-    User::factory()->create([
+    User::factory()->for($tenant)->create([
         'email' => $email,
         'password' => bcrypt($password),
     ]);
 
-    $response = $this->graphQL(
+    $response = $this->domain($tenant)->graphQL(
         /** @lang GraphQL */
         'mutation ($email: String!, $password: String!) {
             login(
@@ -155,7 +158,7 @@ test('refreshToken mutationを実行すると、古いアクセストークン�
     $accessToken = $response->json('data.login.access_token');
     $refreshToken = $response->json('data.login.refresh_token');
 
-    $response = $this->graphQL(
+    $response = $this->domain($tenant)->graphQL(
         /** @lang GraphQL */
         'mutation ($refreshToken: String!) {
             refreshToken(
@@ -176,14 +179,13 @@ test('refreshToken mutationを実行すると、古いアクセストークン�
         ->json()
         ->not->toHaveKey('errors');
 
-    $tenant = Tenant::factory()->create();
     $shop = Shop::factory()->for($tenant)->create();
 
     // トークンの有効・無効をチェックしたいので、内部に認証ユーザーが保持されていないことを確認しておく
     $tokenGuard = auth()->guard('api');
     assert(!$tokenGuard->user());
 
-    $response = $this->graphQL(
+    $response = $this->domain($tenant)->graphQL(
         /** @lang GraphQL */
         'query ($id: ID!) {
             shop(id: $id) {

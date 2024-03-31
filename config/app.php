@@ -184,6 +184,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+        'Context' => App\Facades\Context::class,
         'DbRole' => App\Facades\DbRole::class,
         'DbPolicy' => App\Facades\DbPolicy::class,
         'DbConfig' => App\Facades\DbConfig::class,

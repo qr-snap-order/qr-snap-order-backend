@@ -32,7 +32,7 @@ test('Authorizationヘッダーでアクセストークンを指定していな�
     $tenant = Tenant::factory()->create();
     $shop = Shop::factory()->for($tenant)->create();
 
-    $response = $this->graphQL(
+    $response = $this->domain($tenant)->graphQL(
         /** @lang GraphQL */
         'query ($id: ID!) {
             shop(id: $id) {
@@ -53,15 +53,17 @@ test('Authorizationヘッダーでアクセストークンを指定していな�
 test('login mutationで有効なアクセストークンを取得できること', function () {
     /** @var TestCase $this */
 
+    $tenant = Tenant::factory()->create();
+
     $email = 'hoge@example.com';
     $password = '1234';
 
-    User::factory()->create([
+    User::factory()->for($tenant)->create([
         'email' => $email,
         'password' => bcrypt($password),
     ]);
 
-    $response = $this->graphQL(
+    $response = $this->domain($tenant)->graphQL(
         /** @lang GraphQL */
         'mutation ($email: String!, $password: String!) {
             login(
@@ -87,14 +89,13 @@ test('login mutationで有効なアクセストークンを取得できること
 
     $accessToken = $response->json('data.login.access_token');
 
-    $tenant = Tenant::factory()->create();
     $shop = Shop::factory()->for($tenant)->create();
 
     // トークンの有効・無効をチェックしたいので、内部に認証ユーザーが保持されていないことを確認しておく
     $tokenGuard = auth()->guard('api');
     assert(!$tokenGuard->user());
 
-    $response = $this->graphQL(
+    $response = $this->domain($tenant)->graphQL(
         /** @lang GraphQL */
         'query ($id: ID!) {
             shop(id: $id) {

@@ -30,15 +30,17 @@ beforeEach(function () {
 test('logout mutationを実行すると、Authorizationヘッダーで指定したアクセストークンが無効になること', function () {
     /** @var TestCase $this */
 
+    $tenant = Tenant::factory()->create();
+
     $email = 'hoge@example.com';
     $password = '1234';
 
-    User::factory()->create([
+    User::factory()->for($tenant)->create([
         'email' => $email,
         'password' => bcrypt($password),
     ]);
 
-    $response = $this->graphQL(
+    $response = $this->domain($tenant)->graphQL(
         /** @lang GraphQL */
         'mutation ($email: String!, $password: String!) {
             login(
@@ -64,7 +66,7 @@ test('logout mutationを実行すると、Authorizationヘッダーで指定し�
 
     $accessToken = $response->json('data.login.access_token');
 
-    $response = $this->graphQL(
+    $response = $this->domain($tenant)->graphQL(
         /** @lang GraphQL */
         'mutation {
             logout {
@@ -91,7 +93,7 @@ test('logout mutationを実行すると、Authorizationヘッダーで指定し�
     $tenant = Tenant::factory()->create();
     $shop = Shop::factory()->for($tenant)->create();
 
-    $response = $this->graphQL(
+    $response = $this->domain($tenant)->graphQL(
         /** @lang GraphQL */
         'query ($id: ID!) {
             shop(id: $id) {

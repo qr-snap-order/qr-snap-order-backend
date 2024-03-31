@@ -19,6 +19,7 @@ class TenantFactory extends Factory
         return [
             'id' => $this->faker->uuid(),
             'name' => $this->faker->company(),
+            'subdomain' => $this->faker->domainWord(),
         ];
     }
 }

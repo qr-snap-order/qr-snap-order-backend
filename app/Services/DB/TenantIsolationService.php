@@ -48,11 +48,10 @@ class TenantIsolationService
 
         DbPolicy::enableRowLevelSecurity($table);
 
-        $sessionTenantIdConfig = DbConfig::currentSettingStatement($this->sessionTenantIdConfigKey);
         DbPolicy::createPolicy(
             $this->tenantPolicy,
             $table,
-            "{$tenantIdColumn} = {$sessionTenantIdConfig}::uuid"
+            "{$tenantIdColumn} = " . DbConfig::currentSettingStatement($this->sessionTenantIdConfigKey) . "::uuid"
         );
     }
 
@@ -72,6 +71,24 @@ class TenantIsolationService
     }
 
     /**
+     * @param string $table
+     * @return void
+     */
+    public function grantAllPrivileges(string $table): void
+    {
+        DbRole::grantAllPrivilegesToRole($this->tenantRole, $table);
+    }
+
+    /**
+     * @param string $table
+     * @return void
+     */
+    public function revokeAllPrivileges(string $table): void
+    {
+        DbRole::revokeAllPrivilegesFromRole($this->tenantRole, $table);
+    }
+
+    /**
      * TenantRoleをセットする。
      * 指定されたTenantに紐づく行（grantIsolationRowAccessToTenantRoleで指定）のみ操作(CRUD)可能となる。
      *
@@ -83,6 +100,16 @@ class TenantIsolationService
         DbRole::setRole($this->tenantRole);
 
         DbConfig::setConfig($this->sessionTenantIdConfigKey, $tenantId);
+    }
+
+    /**
+     * @return void
+     */
+    public function clearSessionTenant(): void
+    {
+        DbRole::setRole(config('database.connections.pgsql.username'));
+
+        DbConfig::setConfig($this->sessionTenantIdConfigKey, '');
     }
 
     /**
