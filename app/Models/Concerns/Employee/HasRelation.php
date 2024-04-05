@@ -13,11 +13,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 trait HasRelation
 {
+    /**
+     * @return BelongsTo<Tenant, Employee>
+     */
     public function tenant(): BelongsTo
     {
         return $this->belongsTo(Tenant::class);
     }
 
+    /**
+     * @return BelongsToMany<Shop>
+     */
     public function shops(): BelongsToMany
     {
         return $this->belongsToMany(Shop::class);
