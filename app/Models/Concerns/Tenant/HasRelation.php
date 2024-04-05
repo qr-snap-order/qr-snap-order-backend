@@ -14,16 +14,25 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 trait HasRelation
 {
+    /**
+     * @return BelongsToMany<User>
+     */
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
     }
 
+    /**
+     * @return HasMany<Employee>
+     */
     public function employees(): HasMany
     {
         return $this->hasMany(Employee::class);
     }
 
+    /**
+     * @return HasMany<Shop>
+     */
     public function shops(): HasMany
     {
         return $this->hasMany(Shop::class);

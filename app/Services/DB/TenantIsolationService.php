@@ -107,13 +107,16 @@ class TenantIsolationService
      */
     public function clearSessionTenant(): void
     {
-        DbRole::setRole(config('database.connections.pgsql.username'));
+        $default = config('database.connections.pgsql.username');
+        assert(is_string($default));
+
+        DbRole::setRole($default);
 
         DbConfig::setConfig($this->sessionTenantIdConfigKey, '');
     }
 
     /**
-     * @return string
+     * @return Expression
      */
     public function sessionTenantIdExpression(): Expression
     {

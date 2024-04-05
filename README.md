@@ -103,3 +103,11 @@ PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET=
 PASSPORT_CLIENT_ID=2
 PASSPORT_CLIENT_SECRET=
 ```
+
+## Linter
+
+https://github.com/larastan/larastan
+
+```
+./vendor/bin/sail bin phpstan analyse
+```

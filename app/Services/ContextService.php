@@ -31,6 +31,12 @@ class ContextService
         return $this->tenant !== null;
     }
 
+    /**
+     * @template T
+     * @param Tenant|null $tenant
+     * @param Closure(): T $callback
+     * @return T
+     */
     public function callWithTenant(?Tenant $tenant, Closure $callback): mixed
     {
         $previousTenant = $this->getTenant();

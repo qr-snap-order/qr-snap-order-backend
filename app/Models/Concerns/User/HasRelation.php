@@ -11,6 +11,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 trait HasRelation
 {
+    /**
+     * @return BelongsTo<Tenant, User>
+     */
     public function tenant(): BelongsTo
     {
         return $this->belongsTo(Tenant::class);
