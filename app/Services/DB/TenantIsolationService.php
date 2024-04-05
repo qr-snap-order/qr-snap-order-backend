@@ -113,7 +113,7 @@ class TenantIsolationService
     }
 
     /**
-     * @return string
+     * @return Expression
      */
     public function sessionTenantIdExpression(): Expression
     {

@@ -13,7 +13,7 @@ class ShopPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        throw new \Exception('unimplemented.');
     }
 
     /**
@@ -21,7 +21,7 @@ class ShopPolicy
      */
     public function view(User $user, Shop $shop): bool
     {
-        //
+        throw new \Exception('unimplemented.');
     }
 
     /**
@@ -29,7 +29,7 @@ class ShopPolicy
      */
     public function create(User $user): bool
     {
-        //
+        throw new \Exception('unimplemented.');
     }
 
     /**
@@ -37,7 +37,7 @@ class ShopPolicy
      */
     public function update(User $user, Shop $shop): bool
     {
-        //
+        throw new \Exception('unimplemented.');
     }
 
     /**
@@ -45,7 +45,7 @@ class ShopPolicy
      */
     public function delete(User $user, Shop $shop): bool
     {
-        //
+        throw new \Exception('unimplemented.');
     }
 
     /**
@@ -53,7 +53,7 @@ class ShopPolicy
      */
     public function restore(User $user, Shop $shop): bool
     {
-        //
+        throw new \Exception('unimplemented.');
     }
 
     /**
@@ -61,6 +61,6 @@ class ShopPolicy
      */
     public function forceDelete(User $user, Shop $shop): bool
     {
-        //
+        throw new \Exception('unimplemented.');
     }
 }

@@ -13,7 +13,7 @@ class TenantPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        throw new \Exception('unimplemented.');
     }
 
     /**
@@ -21,7 +21,7 @@ class TenantPolicy
      */
     public function view(User $user, Tenant $tenant): bool
     {
-        //
+        throw new \Exception('unimplemented.');
     }
 
     /**
@@ -29,7 +29,7 @@ class TenantPolicy
      */
     public function create(User $user): bool
     {
-        //
+        throw new \Exception('unimplemented.');
     }
 
     /**
@@ -37,7 +37,7 @@ class TenantPolicy
      */
     public function update(User $user, Tenant $tenant): bool
     {
-        //
+        throw new \Exception('unimplemented.');
     }
 
     /**
@@ -45,7 +45,7 @@ class TenantPolicy
      */
     public function delete(User $user, Tenant $tenant): bool
     {
-        //
+        throw new \Exception('unimplemented.');
     }
 
     /**
@@ -53,7 +53,7 @@ class TenantPolicy
      */
     public function restore(User $user, Tenant $tenant): bool
     {
-        //
+        throw new \Exception('unimplemented.');
     }
 
     /**
@@ -61,6 +61,6 @@ class TenantPolicy
      */
     public function forceDelete(User $user, Tenant $tenant): bool
     {
-        //
+        throw new \Exception('unimplemented.');
     }
 }

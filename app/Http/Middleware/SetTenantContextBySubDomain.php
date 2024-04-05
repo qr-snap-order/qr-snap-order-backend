@@ -27,17 +27,19 @@ class SetTenantContextBySubDomain
 
         $host = $request->getHost();
         $subdomain = $this->getSubdomain($host);
-        abort_unless($subdomain, 500, "{$host} is unexpected domain.");
+        abort_if($subdomain === null, 500, "{$host} is unexpected domain.");
 
         $tenant = Tenant::whereSubdomain($subdomain)->first();
-        abort_unless($tenant, 404, "テナント（{$subdomain}）が見つかりません。");
+        abort_if($tenant === null, 404, "テナント（{$subdomain}）が見つかりません。");
 
         return Context::callWithTenant($tenant, fn () => $next($request));
     }
 
-    protected function getSubdomain(string $host): string
+    protected function getSubdomain(string $host): ?string
     {
         $hostParts = explode('.', $host);
+
+        if (count($hostParts) < 2) return null;
 
         array_pop($hostParts);
 
