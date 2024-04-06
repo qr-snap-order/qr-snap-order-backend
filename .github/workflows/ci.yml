@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          tools: composer
+      - uses: actions/checkout@v3
+      - name: Copy .env
+        run: cp .env.example .env
+      - name: Install Dependencies
+        run: composer install --no-interaction
+      - name: Generate key
+        run: php artisan key:generate
+      - name: Sail up
+        run: ./vendor/bin/sail up -d
+      - name: Lint
+        run: ./vendor/bin/sail bin phpstan analyse
+      - name: Test
+        env:
+          APP_ENV: testing
+          BCRYPT_ROUNDS: 4
+          CACHE_DRIVER: array
+          DB_DATABASE: testing
+          MAIL_MAILER: array
+          QUEUE_CONNECTION: sync
+          SESSION_DRIVER: array
+          TELESCOPE_ENABLED: false
+        run: ./vendor/bin/sail test
