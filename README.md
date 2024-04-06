@@ -1,3 +1,24 @@
+## Setup
+
+```bash
+# 初回実行時は以下の方法で`composer install`する
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v "$(pwd):/var/www/html" \
+    -w /var/www/html \
+    laravelsail/php82-composer:latest \
+    composer install --ignore-platform-reqs
+```
+
+```
+./vendor/bin/sail up
+```
+
+```bash
+# モデル更新時に_ide_helper_models.phpを更新する必要がある。※DBアクセスするのでsailからしか実行できない
+./vendor/bin/sail artisan ide-helper:models --nowrite
+```
+
 ## Migration
 
 
