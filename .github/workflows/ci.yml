@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Copy .env
+        run: cp .env.example .env
+      - name: Install dependencies
+        run: docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd):/var/www/html" -w /var/www/html laravelsail/php82-composer:latest composer install --ignore-platform-reqs
+      - name: Sail up
+        run: ./vendor/bin/sail up -d
+      - name: Generate key
+        run: ./vendor/bin/sail artisan key:generate
+      - name: Check code style
+        run: ./vendor/bin/sail bin phpstan analyse
+      - name: Test
+        env:
+          APP_ENV: testing
+          BCRYPT_ROUNDS: 4
+          CACHE_DRIVER: array
+          DB_DATABASE: testing
+          MAIL_MAILER: array
+          QUEUE_CONNECTION: sync
+          SESSION_DRIVER: array
+          TELESCOPE_ENABLED: false
+        run: ./vendor/bin/sail test
