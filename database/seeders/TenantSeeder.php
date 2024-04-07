@@ -17,6 +17,7 @@ class TenantSeeder extends Seeder
     {
         Tenant::factory([
             'id' => '00000000-0000-0000-0000-000000000000',
+            'subdomain' => 'test',
         ])->create();
     }
 }
