@@ -19,9 +19,7 @@ input UpdateShopEmployees {
 }
 
 extend type Query @guard {
-    shops(
-        tenant_id: ID! @eq @rules(apply: ["required", "uuid"])
-    ): [Shop!]! @all @orderBy(column: "id", direction: DESC)
+    shops: [Shop!]! @all @orderBy(column: "id", direction: DESC)
 
     shop(
         id: ID! @eq @rules(apply: ["required", "uuid"])
@@ -31,8 +29,6 @@ extend type Query @guard {
 extend type Mutation @guard {
     createShop(
         name: String! @rules(apply: ["required", "string", "max:255"])
-
-        tenant_id: ID! @rules(apply: ["required", "uuid", "exists:tenants,id"])
 
         employees: CreateShopEmployees
     ): Shop @create

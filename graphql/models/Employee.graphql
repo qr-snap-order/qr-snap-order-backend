@@ -11,9 +11,7 @@ type Employee {
 }
 
 extend type Query @guard {
-    employees(
-        tenant_id: ID! @eq @rules(apply: ["required", "uuid"])
-    ): [Employee!]! @all @orderBy(column: "id", direction: DESC)
+    employees: [Employee!]! @all @orderBy(column: "id", direction: DESC)
 
     employee(
         id: ID! @eq @rules(apply: ["required", "uuid"])
@@ -23,7 +21,5 @@ extend type Query @guard {
 extend type Mutation @guard {
     createEmployee(
         name: String! @rules(apply: ["required", "string", "max:255"])
-
-        tenant_id: ID! @rules(apply: ["required", "uuid", "exists:tenants,id"])
     ): Employee @create
 }
