@@ -1,0 +1,94 @@
+type Menu {
+    id: ID!
+
+    name: String!
+
+    menuSections: [MenuSection]!
+}
+
+type MenuSection {
+    id: ID!
+
+    name: String!
+
+    menuItems: [MenuItem]!
+}
+
+type MenuItem {
+    id: ID!
+
+    name: String!
+
+    """
+    税抜価格
+    """
+    price: Int!
+}
+
+input CreateMenuSectionInput {
+    name: String! @rules(apply: ["required", "string", "max:255"])
+
+    menuItems: [CreateMenuItemInput]! @rulesForArray(apply: ["required"]) @create
+}
+
+input CreateMenuItemInput {
+    name: String! @rules(apply: ["required", "string", "max:255"])
+
+    """
+    税抜価格
+    """
+    price: Int! @rules(apply: ["required", "integer", "between:0,1000000"])
+}
+
+input UpdateMenuSectionInput {
+    """
+    追加の場合は指定しない
+    """
+    id: ID @rules(apply: ["sometimes", "required", "uuid"])
+
+    name: String!
+
+    menuItems: [UpdateMenuItemInput]! @rulesForArray(apply: ["required"]) @upsertSync
+}
+
+input UpdateMenuItemInput {
+    """
+    追加の場合は指定しない
+    """
+    id: ID @rules(apply: ["sometimes", "required", "uuid"])
+
+    name: String @rules(apply: ["sometimes", "required", "string", "max:255"])
+
+    """
+    税抜価格
+    """
+    price: Int @rules(apply: ["sometimes", "required", "integer", "between:0,1000000"])
+}
+
+extend type Query @guard {
+    menus: [Menu!]! @all @orderBy(column: "id", direction: DESC)
+
+    menu(
+        id: ID! @eq @rules(apply: ["required", "uuid"])
+    ): Menu @find
+}
+
+extend type Mutation @guard {
+    createMenu(
+        name: String! @rules(apply: ["required", "string", "max:255"])
+
+        menuSections: [CreateMenuSectionInput]! @rulesForArray(apply: ["required"]) @create
+    ): Menu @create
+
+    updateMenu(
+        id: ID! @rules(apply: ["required", "uuid"])
+
+        name: String @rules(apply: ["sometimes", "required", "string", "max:255"])
+
+        menuSections: [UpdateMenuSectionInput] @rulesForArray(apply: ["sometimes", "required"]) @upsertSync
+    ): Menu @update
+
+    deleteMenu(
+        id: ID! @eq @rules(apply: ["required", "uuid"])
+    ): Menu @delete
+}
