@@ -132,3 +132,8 @@ https://github.com/larastan/larastan
 ```
 ./vendor/bin/sail bin phpstan analyse
 ```
+
+## Tasks
+
+https://naotake51.atlassian.net/jira/software/projects/QSO/boards/1
+
