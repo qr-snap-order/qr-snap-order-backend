@@ -20,6 +20,8 @@ class UserSeeder extends Seeder
 
         User::factory([
             'id' => '00000000-0000-0000-0000-000000000000',
+            'email' => 'test@example.com',
+            'password' => bcrypt('password'),
         ])->for($tenant)->create();
     }
 }
