@@ -91,4 +91,8 @@ extend type Mutation @guard {
     deleteMenu(
         id: ID! @eq @rules(apply: ["required", "uuid"])
     ): Menu @delete
+
+    copyMenu(
+        id: ID! @eq @rules(apply: ["required", "uuid"])
+    ): Menu
 }
