@@ -21,23 +21,25 @@ abstract class TestCase extends BaseTestCase
          * UrlGeneratorのrouteメソッドをモックする
          * partialMockだとUrlGeneratorの他メソッドが呼ばれたとき、なぜかBadMethodCallExceptionが発生する。
          */
-        $urlGenerator = app('url');
-        $this->app->instance('url', new class($urlGenerator, $tenant) extends UrlGenerator
-        {
-            protected $tenant;
-
-            public function __construct($url, $tenant)
+        $this->app->extend(
+            'url',
+            fn ($url) => new class($url, $tenant) extends UrlGenerator
             {
-                parent::__construct($url->routes, $url->request);
+                protected $tenant;
 
-                $this->tenant = $tenant;
-            }
+                public function __construct($url, $tenant)
+                {
+                    parent::__construct($url->routes, $url->request);
 
-            public function route($name, $parameters = [], $absolute = true)
-            {
-                return "http://{$this->tenant->subdomain}.localhost/graphql";
+                    $this->tenant = $tenant;
+                }
+
+                public function route($name, $parameters = [], $absolute = true)
+                {
+                    return "http://{$this->tenant->subdomain}.localhost/graphql";
+                }
             }
-        });
+        );
 
         return $this;
     }
