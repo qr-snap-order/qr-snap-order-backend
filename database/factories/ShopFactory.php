@@ -17,7 +17,8 @@ class ShopFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->company(),
+            'id' => $this->faker->uuid,
+            'name' => $this->faker->company,
         ];
     }
 }
