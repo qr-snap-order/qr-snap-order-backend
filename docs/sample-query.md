@@ -1,3 +1,18 @@
+## Auth
+
+```graphql
+mutation {
+    login(
+        input: {
+            username: "test@example.com",
+            password: "password"
+        }
+    ) {
+        access_token
+    }
+}
+```
+
 ## Tenant
 
 ```graphql

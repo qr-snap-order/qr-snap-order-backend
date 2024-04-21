@@ -69,9 +69,16 @@ docker run --rm \
 ## Query And Mutation
 
 実行環境
-http://localhost/graphiql
+http://test.localhost/graphiql
 
 [サンプル](docs/sample-query.md)
+
+Headers
+```
+{
+    "Authorization": "Bearer User-Token"
+}
+```
 
 ## Recommend VScode Settings
 
