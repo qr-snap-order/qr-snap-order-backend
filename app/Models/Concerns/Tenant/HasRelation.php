@@ -6,7 +6,6 @@ use App\Models\Employee;
 use App\Models\Shop;
 use App\Models\Tenant;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -15,11 +14,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 trait HasRelation
 {
     /**
-     * @return BelongsToMany<User>
+     * @return HasMany<User>
      */
-    public function users(): BelongsToMany
+    public function users(): HasMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->hasMany(User::class);
     }
 
     /**

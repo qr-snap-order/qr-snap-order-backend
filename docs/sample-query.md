@@ -63,3 +63,98 @@ mutation {
     }
 }
 ```
+
+## Menu
+
+```graphql
+query {
+    menu(id: "00000000-0000-0000-0000-000000000000") {
+        id
+        name
+        menuSections {
+            id
+            name
+            menuItems {
+                id
+                name
+                price
+            }
+        }
+    }
+}
+
+mutation {
+    createMenu(
+        name: "メニュー"
+        menuSections: [
+            {
+                name: "ドリンク"
+                menuItems: [
+                    {
+                        name: "烏龍茶"
+                        price: 200
+                    },
+                    {
+                        name: "コーラ"
+                        price: 250
+                    },
+                ]
+            }
+        ]
+    ) {
+        id
+        name
+        menuSections {
+            id
+            name
+            menuItems {
+                id
+                name
+                price
+            }
+        }
+    }
+}
+
+mutation {
+    updateMenu(
+        id: "00000000-0000-0000-0000-000000000000"
+        name: "メニュー"
+        menuSections: [
+            {
+                name: "ドリンク"
+                menuItems: [
+                    {
+                        name: "烏龍茶"
+                        price: 200
+                    },
+                    {
+                        name: "コーラ"
+                        price: 250
+                    },
+                ]
+            }
+        ]
+    ) {
+        id
+        name
+        menuSections {
+            id
+            name
+            menuItems {
+                id
+                name
+                price
+            }
+        }
+    }
+}
+
+mutation {
+    deleteMenu(
+        id: "00000000-0000-0000-0000-000000000000"
+    ) {
+        id
+    }
+}
+```
