@@ -17,7 +17,6 @@ class TenantFactory extends Factory
     public function definition(): array
     {
         return [
-            'id' => $this->faker->uuid,
             'name' => $this->faker->company,
             'subdomain' => $this->faker->domainWord,
         ];
