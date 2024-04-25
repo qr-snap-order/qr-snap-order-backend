@@ -12,4 +12,14 @@ class Shop extends Model
     use HasFactory;
     use HasUuids;
     use HasRelation;
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // TODO:: 仕組化する
+        self::deleting(
+            fn (Shop $shop) => $shop->employees()->detach()
+        );
+    }
 }

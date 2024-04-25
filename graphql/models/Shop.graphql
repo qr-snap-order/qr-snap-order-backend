@@ -7,9 +7,10 @@ type Shop {
 
     tenant: Tenant!
 
-    employees: [Employee!]! @belongsToMany @orderBy(column: "id", direction: DESC)
+    employees: [Employee!]! @belongsToMany @orderBy(column: "id", direction: ASC)
 }
 
+# TODO:: ネストが必要がどうか検討する（権限周りで選択項目に表示できないEmployeeがあったときにどうするかなど）
 input CreateShopEmployees {
     connect: [ID!] @rules(apply: ["required", "uuid", "exists:employees,id"]) @rulesForArray(apply: ["max:1024"])
 }
@@ -19,7 +20,7 @@ input UpdateShopEmployees {
 }
 
 extend type Query @guard {
-    shops: [Shop!]! @all @orderBy(column: "id", direction: DESC)
+    shops: [Shop!]! @all @orderBy(column: "id", direction: ASC)
 
     shop(
         id: ID! @eq @rules(apply: ["required", "uuid"])
