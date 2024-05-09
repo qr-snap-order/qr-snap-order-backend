@@ -1,0 +1,35 @@
+type Category {
+    id: ID!
+
+    name: String!
+
+    menuItems: [MenuItem!]!
+        @belongsToMany
+        @orderBy(column: "id", direction: ASC)
+}
+
+extend type Query @guard {
+    categories: [Category!]! @all @orderBy(column: "id", direction: ASC)
+
+    category(id: ID! @eq @rules(apply: ["required", "uuid"])): Category @find
+}
+
+extend type Mutation @guard {
+    createCategory(
+        name: String! @rules(apply: ["required", "string", "max:255"])
+
+        menuItems: [ID!]! @rules(apply: ["required", "uuid"]) @connectSync
+    ): Category @create
+
+    updateCategory(
+        id: ID! @rules(apply: ["required", "uuid"])
+
+        name: String
+            @rules(apply: ["sometimes", "required", "string", "max:255"])
+
+        menuItems: [ID!] @rules(apply: ["required", "uuid"]) @connectSync
+    ): Category @update
+
+    deleteCategory(id: ID! @eq @rules(apply: ["required", "uuid"])): Category
+        @delete
+}

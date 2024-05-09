@@ -23,6 +23,8 @@ type MenuItem {
     税抜価格
     """
     price: Int!
+
+    categories: [Category!]!
 }
 
 input CreateMenuSectionInput {
@@ -38,6 +40,8 @@ input CreateMenuItemInput {
     税抜価格
     """
     price: Int! @rules(apply: ["required", "integer", "between:0,1000000"])
+
+    categories: [ID!]! @rules(apply: ["required", "uuid"]) @connectSync
 }
 
 input UpdateMenuSectionInput {
@@ -63,6 +67,8 @@ input UpdateMenuItemInput {
     税抜価格
     """
     price: Int @rules(apply: ["sometimes", "required", "integer", "between:0,1000000"])
+
+    categories: [ID!] @rules(apply: ["required", "uuid"]) @connectSync
 }
 
 extend type Query @guard {

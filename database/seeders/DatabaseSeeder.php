@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Seeders\CategorySeeder;
 use Database\Seeders\EmployeeSeeder;
 use Database\Seeders\ShopSeeder;
 use Database\Seeders\UserSeeder;
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
             ShopSeeder::class,
             EmployeeSeeder::class,
             MenuSeeder::class,
+            CategorySeeder::class,
         ]);
     }
 }

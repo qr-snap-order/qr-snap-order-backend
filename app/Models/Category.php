@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use App\Models\Concerns\MenuItem\HasRelation;
+use App\Models\Concerns\Category\HasRelation;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MenuItem extends Model
+class Category extends Model
 {
     use HasFactory;
     use HasUuids;
@@ -19,7 +19,7 @@ class MenuItem extends Model
 
         // TODO:: 仕組化する
         self::deleting(
-            fn (MenuItem $menuItem) => $menuItem->categories()->detach()
+            fn (Category $category) => $category->menuItems()->detach()
         );
     }
 }
