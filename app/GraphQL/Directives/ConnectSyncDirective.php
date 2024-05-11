@@ -20,13 +20,13 @@ final class ConnectSyncDirective extends BaseDirective implements ArgDirectiveFo
         return
             /** @lang GraphQL */
             '
-directive @connectSync {
+directive @connectSync (
   """
   Specify the relationship method name in the model class,
   if it is named different from the field in the schema.
   """
   relation: String
-} on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+ ) on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
 ';
     }
 
