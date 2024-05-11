@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use App\Models\Menu;
 use App\Models\Tenant;
 use App\Models\User;
@@ -12,9 +13,11 @@ test('createMenu mutation', function () {
 
     $user = User::factory()->for($tenant)->create();
 
+    $category = Category::factory()->for($tenant)->create();
+
     $response = $this->domain($tenant)->actingAs($user)->graphQL(
-        /** @lang GraphQL */
-        'mutation {
+        /** @lang GraphQL */ <<<GRAPHQL
+        mutation {
             createMenu(
                 name: "メニュー"
                 menuSections: [
@@ -24,10 +27,12 @@ test('createMenu mutation', function () {
                             {
                                 name: "烏龍茶"
                                 price: 200
+                                categories: ["{$category->id}"]
                             },
                             {
                                 name: "コーラ"
                                 price: 250
+                                categories: []
                             },
                         ]
                     }
@@ -42,10 +47,14 @@ test('createMenu mutation', function () {
                         id
                         name
                         price
+                        categories {
+                            id
+                        }
                     }
                 }
             }
-        }'
+        }
+        GRAPHQL
     );
 
     expect($response->content())
@@ -62,9 +71,12 @@ test('createMenu mutation', function () {
         ->data->createMenu->menuSections->{0}->menuItems->{0}->id->toBeString()
         ->data->createMenu->menuSections->{0}->menuItems->{0}->name->toBe('烏龍茶')
         ->data->createMenu->menuSections->{0}->menuItems->{0}->price->toBe(200)
+        ->data->createMenu->menuSections->{0}->menuItems->{0}->categories->toHaveCount(1)
+        ->data->createMenu->menuSections->{0}->menuItems->{0}->categories->{0}->id->toBe($category->id)
         ->data->createMenu->menuSections->{0}->menuItems->{1}->id->toBeString()
         ->data->createMenu->menuSections->{0}->menuItems->{1}->name->toBe('コーラ')
-        ->data->createMenu->menuSections->{0}->menuItems->{1}->price->toBe(250);
+        ->data->createMenu->menuSections->{0}->menuItems->{1}->price->toBe(250)
+        ->data->createMenu->menuSections->{0}->menuItems->{1}->categories->toHaveCount(0);
 
     expect(Menu::findOrFail($response->json('data.createMenu.id')))
         ->id->toBeString()
