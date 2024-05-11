@@ -6,20 +6,17 @@ use App\Models\Concerns\Menu\HasRelation;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use ShiftOneLabs\LaravelCascadeDeletes\CascadesDeletes;
 
 class Menu extends Model
 {
+    use CascadesDeletes;
     use HasFactory;
     use HasUuids;
     use HasRelation;
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        // TODO:: 仕組化する
-        self::deleting(
-            fn (Menu $menu) => $menu->menuSections->each->delete()
-        );
-    }
+    /**
+     * @var array<int, string> $cascadeDeletes
+     */
+    protected array $cascadeDeletes = ['menuSections'];
 }
