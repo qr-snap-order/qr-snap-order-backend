@@ -1,8 +1,8 @@
-## Shop User
+## Tenant
 
 ```mermaid
 erDiagram
-    users }|--o{ tenants : ""
+    tenants ||--o{ users : ""
     tenants ||--o{ shops : ""
     tenants ||--o{ employees : ""
     shops }o--o{ employees : ""
@@ -12,6 +12,7 @@ erDiagram
 
 ```mermaid
 erDiagram
-    menus ||--o{ menu_categories : ""
-    menu_categories ||--o{ menu_items : ""
+    menus ||--o{ menu_sections : ""
+    menu_sections ||--o{ menu_items : ""
+    menu_items }o--o{ categories : ""
 ```
