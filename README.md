@@ -15,8 +15,27 @@ docker run --rm \
 ```
 
 ```bash
+./vendor/bin/sail php artisan migrate --seed
+```
+
+```bash
 # モデル更新時に_ide_helper_models.phpを更新する必要がある。※DBアクセスするのでsailからしか実行できない
 ./vendor/bin/sail artisan ide-helper:models --nowrite
+```
+
+```bash
+./vendor/bin/sail php artisan passport:install
+```
+
+以下の環境変数に生成したClientを設定。SecretはDBのデータを確認して埋める
+```
+# for passport
+PASSPORT_PERSONAL_ACCESS_CLIENT_ID=1
+PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET=
+
+# for lighthouse-graphql-passport-auth
+PASSPORT_CLIENT_ID=2
+PASSPORT_CLIENT_SECRET=
 ```
 
 ## Migration
