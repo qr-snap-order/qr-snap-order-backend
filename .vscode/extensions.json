@@ -2,6 +2,7 @@
     "recommendations": [
         "bmewburn.vscode-intelephense-client",
         "mehedidracula.php-namespace-resolver",
-        "m1guelpf.better-pest"
+        "m1guelpf.better-pest",
+        "zobo.php-intellisense"
     ]
 }
