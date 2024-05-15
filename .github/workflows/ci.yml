@@ -44,7 +44,7 @@ jobs:
         run: ./vendor/bin/sail up -d
       - name: Save docker images
         if: steps.cache-images.outputs.cache-hit != 'true'
-        run: docker save --output ${{ env.CACHE_IMAGES_TAR }} $(docker compose images -q)
+        run: docker save --output ${{ env.CACHE_IMAGES_TAR }} $(docker compose images | awk 'NR>1 {print $2}')
 
       - name: Generate key
         run: ./vendor/bin/sail artisan key:generate
