@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "QSO-54-4"]
   pull_request:
-    branches: ["main"]
+    branches: ["main", "QSO-54-4"]
 
 env:
   CACHE_IMAGES_DATE: "2024-05-16"
