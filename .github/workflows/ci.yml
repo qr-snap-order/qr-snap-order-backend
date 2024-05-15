@@ -67,8 +67,8 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: fuga
+          labels: hoge
 
       - name: Generate key
         run: ./vendor/bin/sail artisan key:generate
