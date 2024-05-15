@@ -38,12 +38,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: create tag 1
-      #   run: docker tag sail-8.2/app:latest ghcr.io/qr-snap-order/sail-8.2/app:latest
       - name: pull Docker image 1
         run: docker pull ghcr.io/qr-snap-order/sail-8.2/app:latest
+      - name: revert tag 1
+        run: docker tag ghcr.io/qr-snap-order/sail-8.2/app:latest sail-8.2/app:latest
+
       - name: pull Docker image 2
         run: docker pull ghcr.io/qr-snap-order/postgres:15
+      - name: revert tag 2
+        run: docker tag ghcr.io/qr-snap-order/postgres:15 postgres:15
 
       # - name: Cache Docker images
       #   id: cache-images
