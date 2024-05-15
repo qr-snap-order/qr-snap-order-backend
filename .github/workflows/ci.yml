@@ -10,7 +10,7 @@ env:
   CACHE_IMAGES_DATE: "2024-05-16"
   CACHE_IMAGES_TAR: ./cache-images.tar
 
-# CI検証用
+# CI検証用2
 jobs:
   test:
     runs-on: ubuntu-latest
