@@ -55,9 +55,15 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: create tag
-        run: docker tag postgres:15  ghcr.io/qr-snap-order/postgres:15
-      - name: push Docker image
+
+      - name: create tag 1
+        run: docker tag sail-8.2/app:latest ghcr.io/qr-snap-order/sail-8.2/app:latest
+      - name: push Docker image 1
+        run: docker push ghcr.io/qr-snap-order/sail-8.2/app:latest
+
+      - name: create tag 2
+        run: docker tag postgres:15 ghcr.io/qr-snap-order/postgres:15
+      - name: push Docker image 2
         run: docker push ghcr.io/qr-snap-order/postgres:15
 
       - name: Generate key
