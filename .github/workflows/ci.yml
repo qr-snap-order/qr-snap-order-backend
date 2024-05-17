@@ -19,6 +19,9 @@ jobs:
       - name: Copy .env
         run: cp .env.example .env
 
+      - name: History
+        run: history
+
       # Composer パッケージをインストールする（キャッシュする）
       # - name: Cache composer packages
       #   id: cache-composer-packages
