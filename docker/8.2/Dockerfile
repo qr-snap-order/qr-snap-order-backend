@@ -60,7 +60,8 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY php.ini /etc/php/8.2/cli/conf.d/99-sail.ini
 RUN chmod +x /usr/local/bin/start-container
 
-RUN --mount=type=cache,target=/var/www/html/vendor
+RUN --mount=type=cache,target=./vendor \
+    composer install --ignore-platform-reqs
 
 EXPOSE 8000
 
