@@ -12,9 +12,7 @@ env:
 
 jobs:
   test:
-    runs-on:
-      - self-hosted
-      - MacBook-Pro
+    runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@v3
