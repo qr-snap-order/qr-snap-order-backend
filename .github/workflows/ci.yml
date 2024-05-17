@@ -10,10 +10,11 @@ env:
   CACHE_IMAGES_DATE: "2024-05-16"
   CACHE_IMAGES_TAR: ./cache-images.tar
 
-# CI検証用3
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on:
+      - self-hosted
+      - MacBook-Pro
 
     steps:
       - uses: actions/checkout@v3
