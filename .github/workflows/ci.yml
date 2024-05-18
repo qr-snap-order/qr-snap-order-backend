@@ -6,6 +6,7 @@ on:
   pull_request:
     branches: ["main", "QSO-54-4"]
 
+# 適当な変更
 env:
   CACHE_IMAGES_DATE: "2024-05-16"
   CACHE_IMAGES_TAR: ./cache-images.tar
