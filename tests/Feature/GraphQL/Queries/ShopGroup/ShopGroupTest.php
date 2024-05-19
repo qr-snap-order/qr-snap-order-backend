@@ -39,7 +39,7 @@ test('shopGroup query', function () {
         ->json()
         ->not->toHaveKey('errors')
         ->toHaveKey('data.shopGroup')
-        ->data->shopGroup->name->toBe('関東店舗グループ_')
+        ->data->shopGroup->name->toBe('関東店舗グループ')
         ->data->shopGroup->shops->toHaveCount(2)
         ->data->shopGroup->shops->{0}->name->toBe('東京支店')
         ->data->shopGroup->shops->{1}->name->toBe('千葉支店');
