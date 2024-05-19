@@ -73,5 +73,6 @@ jobs:
         run: ./vendor/bin/sail test
 
       - name: Sail down
+        if: always()
         run: ./vendor/bin/sail down
 
