@@ -20,6 +20,9 @@ jobs:
         with:
           clean: false
 
+      - name: Clean up
+        run: git clean -ffdx -e ./vendor
+
       - name: Copy .env
         run: cp .env.example .env
 
