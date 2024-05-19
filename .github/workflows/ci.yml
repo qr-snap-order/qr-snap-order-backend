@@ -53,9 +53,6 @@ jobs:
       #   if: steps.cache-images.outputs.cache-hit != 'true'
       #   run: docker save --output ${{ env.CACHE_IMAGES_TAR }} $(docker compose images | awk 'NR>1 {print $2}')
 
-      - name: Show tmp
-        run: ls -al /tmp/
-
       - name: Generate key
         run: ./vendor/bin/sail artisan key:generate
       - name: Check code style
@@ -71,3 +68,7 @@ jobs:
           SESSION_DRIVER: array
           TELESCOPE_ENABLED: false
         run: ./vendor/bin/sail test
+
+      - name: Sail down
+        run: ./vendor/bin/sail down
+
