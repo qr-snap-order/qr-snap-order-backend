@@ -6,31 +6,43 @@ on:
   pull_request:
     branches: ["main"]
 
-env:
-  CACHE_IMAGES_DATE: "2024-05-15"
-  CACHE_IMAGES_TAR: ./cache-images.tar
-
+# CI検証用2
 jobs:
-  test:
-    runs-on: self-hosted
-
+  build:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Copy .env
         run: cp .env.example .env
 
-      # Composer パッケージをインストールする（キャッシュする）
-      - name: Cache composer packages
-        id: cache-composer-packages
-        uses: whywaita/actions-cache-s3@v2
-        with:
-          path: ./vendor
-          key: ${{ runner.os }}-composer-${{ hashFiles('./composer.lock') }}
-          aws-s3-bucket: composer-cache
-          aws-access-key-id: dummy
-          aws-secret-access-key: dummy
-          aws-region: ap-northeast-1
-          aws-endpoint: http://localhost:4566
       - name: Install dependencies
-        if: steps.cache-composer-packages.outputs.cache-hit != 'true'
         run: docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd):/var/www/html" -w /var/www/html laravelsail/php82-composer:latest composer install --ignore-platform-reqs
+
+      # Docker コンテナの起動（イメージをキャッシュする）
+      - name: Sail up
+        run: ./vendor/bin/sail up -d
+
+      - name: Generate key
+        run: ./vendor/bin/sail artisan key:generate
+      - name: Check code style
+        run: ./vendor/bin/sail bin phpstan analyse
+
+  test:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    strategy:
+      matrix:
+        test-scope: [1, 2, 3]
+    steps:
+      - name: Test
+        env:
+          APP_ENV: testing
+          BCRYPT_ROUNDS: 4
+          CACHE_DRIVER: array
+          DB_DATABASE: testing
+          MAIL_MAILER: array
+          QUEUE_CONNECTION: sync
+          SESSION_DRIVER: array
+          TELESCOPE_ENABLED: false
+        run: ./vendor/bin/sail test
