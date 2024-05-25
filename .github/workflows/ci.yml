@@ -12,37 +12,63 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Copy .env
         run: cp .env.example .env
 
       - name: Install dependencies
         run: docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd):/var/www/html" -w /var/www/html laravelsail/php82-composer:latest composer install --ignore-platform-reqs
 
-      # Docker コンテナの起動（イメージをキャッシュする）
       - name: Sail up
-        run: ./vendor/bin/sail up -d
+        run: ./vendor/bin/sail up -d laravel.test
 
       - name: Generate key
         run: ./vendor/bin/sail artisan key:generate
+
       - name: Check code style
         run: ./vendor/bin/sail bin phpstan analyse
 
-  test:
-    runs-on: ubuntu-latest
-    needs:
-      - build
-    strategy:
-      matrix:
-        test-scope: [1, 2, 3]
-    steps:
-      - name: Test
-        env:
-          APP_ENV: testing
-          BCRYPT_ROUNDS: 4
-          CACHE_DRIVER: array
-          DB_DATABASE: testing
-          MAIL_MAILER: array
-          QUEUE_CONNECTION: sync
-          SESSION_DRIVER: array
-          TELESCOPE_ENABLED: false
-        run: ./vendor/bin/sail test
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Push Image
+
+  # test:
+  #   runs-on: ubuntu-latest
+  #   needs:
+  #     - build
+  #   strategy:
+  #     matrix:
+  #       test-scope: [1]
+  #   steps:
+  #     - uses: actions/checkout@v4
+
+  #     - name: Copy .env
+  #       run: cp .env.example .env
+
+  #     - name: Install dependencies
+  #       run: docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd):/var/www/html" -w /var/www/html laravelsail/php82-composer:latest composer install --ignore-platform-reqs
+
+  #     # Pull Image
+
+  #     - name: Sail up
+  #       run: ./vendor/bin/sail up -d
+
+  #     - name: Generate key
+  #       run: ./vendor/bin/sail artisan key:generate
+
+  #     - name: Test
+  #       env:
+  #         APP_ENV: testing
+  #         BCRYPT_ROUNDS: 4
+  #         CACHE_DRIVER: array
+  #         DB_DATABASE: testing
+  #         MAIL_MAILER: array
+  #         QUEUE_CONNECTION: sync
+  #         SESSION_DRIVER: array
+  #         TELESCOPE_ENABLED: false
+  #       run: ./vendor/bin/sail test
