@@ -7,6 +7,7 @@ setup:
 	@make ide-helper-models
 	@make migrate
 	@make seed
+	@make s3-create-bucket
 	@make passport-install
 
 composer-install:
@@ -62,3 +63,14 @@ debug-test:
 
 lint:
 	./vendor/bin/sail bin phpstan analyse
+
+# S3系コマンド
+
+s3:
+	docker exec localstack-main awslocal s3api $(COMMAND)
+
+s3-create-bucket:
+	@make s3 COMMAND="create-bucket --bucket develop-public"
+
+s3-bucket-objects:
+	@make s3 COMMAND="list-objects --bucket develop-public"
