@@ -24,6 +24,8 @@ type MenuItem {
     """
     price: Int!
 
+    image: String
+
     categories: [Category!]! @belongsToMany
 }
 
@@ -40,6 +42,8 @@ input CreateMenuItemInput {
     税抜価格
     """
     price: Int! @rules(apply: ["required", "integer", "between:0,1000000"])
+
+    image: Upload @upload(disk: "s3", path: "menu-item/image", public: true) @rules(apply: ["sometimes", "required", "image", "max:2048"])
 
     categories: [ID!]! @rules(apply: ["required", "uuid"]) @connectSync
 }

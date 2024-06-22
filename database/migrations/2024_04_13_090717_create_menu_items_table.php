@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignUuid('menu_section_id')->constrained();
             $table->string('name', 255);
             $table->unsignedInteger('price');
+            $table->string('image', 255)->nullable();
             $table->timestamps();
         });
 
