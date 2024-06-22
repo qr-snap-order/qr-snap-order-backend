@@ -34,3 +34,6 @@ _lighthouse_ide_helper.php
 
 # for Laravel Passport
 .rnd
+
+# for Docker container
+volume
