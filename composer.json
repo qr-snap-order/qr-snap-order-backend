@@ -14,8 +14,10 @@
         "laravel/framework": "^11.0",
         "laravel/passport": "^12.0",
         "laravel/tinker": "^2.8",
+        "league/flysystem-aws-s3-v3": "^3.0",
         "mll-lab/laravel-graphiql": "^3.1",
-        "nuwave/lighthouse": "^6.22"
+        "nuwave/lighthouse": "^6.22",
+        "shiftonelabs/laravel-cascade-deletes": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.0",

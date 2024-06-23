@@ -3,7 +3,7 @@ type Menu {
 
     name: String!
 
-    menuSections: [MenuSection]!
+    menuSections: [MenuSection]! @hasMany
 }
 
 type MenuSection {
@@ -11,7 +11,7 @@ type MenuSection {
 
     name: String!
 
-    menuItems: [MenuItem]!
+    menuItems: [MenuItem]! @hasMany
 }
 
 type MenuItem {
@@ -24,7 +24,9 @@ type MenuItem {
     """
     price: Int!
 
-    categories: [Category!]!
+    image: String
+
+    categories: [Category!]! @belongsToMany
 }
 
 input CreateMenuSectionInput {
@@ -40,6 +42,8 @@ input CreateMenuItemInput {
     税抜価格
     """
     price: Int! @rules(apply: ["required", "integer", "between:0,1000000"])
+
+    image: Upload @upload(disk: "s3", path: "menu-item/image", public: true) @rules(apply: ["sometimes", "required", "image", "max:2048"])
 
     categories: [ID!]! @rules(apply: ["required", "uuid"]) @connectSync
 }

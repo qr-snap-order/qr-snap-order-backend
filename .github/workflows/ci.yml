@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: ["main"]
 
+env:
+  CACHE_IMAGES_DATE: "2024-05-15"
+  CACHE_IMAGES_TAR: ./cache-images.tar
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -14,10 +18,34 @@ jobs:
       - uses: actions/checkout@v3
       - name: Copy .env
         run: cp .env.example .env
+
+      # Composer パッケージをインストールする（キャッシュする）
+      - name: Cache composer packages
+        id: cache-composer-packages
+        uses: actions/cache@v4
+        with:
+          path: ./vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('./composer.lock') }}
       - name: Install dependencies
+        if: steps.cache-composer-packages.outputs.cache-hit != 'true'
         run: docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd):/var/www/html" -w /var/www/html laravelsail/php82-composer:latest composer install --ignore-platform-reqs
+
+      # Docker コンテナの起動（イメージをキャッシュする）
+      - name: Cache Docker images
+        id: cache-images
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.CACHE_IMAGES_TAR }}
+          key: ${{ runner.os }}-images-${{ env.CACHE_IMAGES_DATE }}
+      - name: Load cached docker images
+        if: steps.cache-images.outputs.cache-hit == 'true'
+        run: docker load --input ${{ env.CACHE_IMAGES_TAR }}
       - name: Sail up
         run: ./vendor/bin/sail up -d
+      - name: Save docker images
+        if: steps.cache-images.outputs.cache-hit != 'true'
+        run: docker save --output ${{ env.CACHE_IMAGES_TAR }} $(docker compose images | awk 'NR>1 {print $2}')
+
       - name: Generate key
         run: ./vendor/bin/sail artisan key:generate
       - name: Check code style

@@ -1,66 +1,56 @@
 ## Setup
 
-```bash
-# 初回実行時は以下の方法で`composer install`する
-docker run --rm \
-    -u "$(id -u):$(id -g)" \
-    -v "$(pwd):/var/www/html" \
-    -w /var/www/html \
-    laravelsail/php82-composer:latest \
-    composer install --ignore-platform-reqs
-```
+`make setup`を実行して、セットアップおよびコンテナを起動する
+
+Laravel PassportのClient secretがログに出力されるので.envに設定する
 
 ```
-./vendor/bin/sail up
+# for passport
+PASSPORT_PERSONAL_ACCESS_CLIENT_ID=1
+PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET=
+
+# for lighthouse-graphql-passport-auth
+PASSPORT_CLIENT_ID=2
+PASSPORT_CLIENT_SECRET=
 ```
 
-```bash
-# モデル更新時に_ide_helper_models.phpを更新する必要がある。※DBアクセスするのでsailからしか実行できない
-./vendor/bin/sail artisan ide-helper:models --nowrite
-```
+|コマンド|意味|
+|---|---|
+|make setup|各種セットアップ、コンテナ起動|
+|make up|コンテナ起動|
+|make stop|コンテナ停止|
+|make down|コンテナ削除|
+|make destroy|コンテナ削除（Volumesも削除）|
 
 ## Migration
 
-
-```
-./vendor/bin/sail php artisan migrate
-```
-
-```
-./vendor/bin/sail php artisan migrate --seed
-```
-
-```
-./vendor/bin/sail php artisan migrate:rollback --step=1
-```
-
-```
-./vendor/bin/sail php artisan migrate:fresh --seed
-```
+|コマンド|意味|
+|---|---|
+|make migrate|マイグレーション|
+|make seed|シードデータ取り込み|
+|make fresh|全テーブルをドロップ & マイグレーション|
+|make rollback|ロールバック（1ステップ）|
 
 ## Test
 
-```
-./vendor/bin/sail test
-```
-
-```
-./vendor/bin/sail test tests/Feature/GraphQL/Mutations/LoginTest.php
-```
-
-### Use Xdebug
-
-```
-./vendor/bin/sail debug test
-```
-
-```
-./vendor/bin/sail debug test tests/Feature/GraphQL/Mutations/LoginTest.php
-```
+|コマンド|意味|
+|---|---|
+|make test|テスト実行|
+|make test-debug|デバックモードでテスト実行|
 
 ### Use Better Pest (VSCode Extension)
 
 `Cmd + Ship + p` > `Better Pest: run`
+
+下記の.vscode/settings.jsonを設定
+
+## Linter
+
+https://github.com/larastan/larastan
+
+|コマンド|意味|
+|---|---|
+|make lint|Linterの実行|
 
 ## 設計
 
@@ -130,14 +120,6 @@ PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET=
 # for lighthouse-graphql-passport-auth
 PASSPORT_CLIENT_ID=2
 PASSPORT_CLIENT_SECRET=
-```
-
-## Linter
-
-https://github.com/larastan/larastan
-
-```
-./vendor/bin/sail bin phpstan analyse
 ```
 
 ## Tasks

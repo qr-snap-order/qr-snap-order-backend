@@ -95,7 +95,7 @@ test('updateMenu mutation', function () {
         ->data->updateMenu->menuSections->{1}->menuItems->{0}->name->toBe('ステーキ')
         ->data->updateMenu->menuSections->{1}->menuItems->{0}->price->toBe(1200);
 
-    expect($updatingMenu->fresh())
+    expect($updatingMenu->fresh()->load('menuSections.menuItems'))
         ->id->toBeString()
         ->name->toBe('メニュー')
         ->menuSections->toHaveCount(2)
