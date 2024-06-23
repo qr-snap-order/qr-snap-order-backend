@@ -3,7 +3,7 @@ type Menu {
 
     name: String!
 
-    menuSections: [MenuSection]! @hasMany
+    menuSections: [MenuSection!]! @hasMany
 }
 
 type MenuSection {
@@ -11,7 +11,7 @@ type MenuSection {
 
     name: String!
 
-    menuItems: [MenuItem]! @hasMany
+    menuItems: [MenuItem!]! @hasMany
 }
 
 type MenuItem {
@@ -32,7 +32,7 @@ type MenuItem {
 input CreateMenuSectionInput {
     name: String! @rules(apply: ["required", "string", "max:255"])
 
-    menuItems: [CreateMenuItemInput]! @rulesForArray(apply: ["required"]) @create
+    menuItems: [CreateMenuItemInput!]! @rulesForArray(apply: ["required"]) @create
 }
 
 input CreateMenuItemInput {
@@ -56,7 +56,7 @@ input UpdateMenuSectionInput {
 
     name: String!
 
-    menuItems: [UpdateMenuItemInput]! @rulesForArray(apply: ["required"]) @upsertSync
+    menuItems: [UpdateMenuItemInput!]! @rulesForArray(apply: ["required"]) @upsertSync
 }
 
 input UpdateMenuItemInput {
@@ -87,8 +87,8 @@ extend type Mutation @guard {
     createMenu(
         name: String! @rules(apply: ["required", "string", "max:255"])
 
-        menuSections: [CreateMenuSectionInput]! @rulesForArray(apply: ["required"]) @create
-    ): Menu @create
+        menuSections: [CreateMenuSectionInput!]! @rulesForArray(apply: ["required"]) @create
+    ): Menu! @create
 
     updateMenu(
         id: ID! @rules(apply: ["required", "uuid"])
@@ -96,7 +96,7 @@ extend type Mutation @guard {
         name: String @rules(apply: ["sometimes", "required", "string", "max:255"])
 
         menuSections: [UpdateMenuSectionInput] @rulesForArray(apply: ["sometimes", "required"]) @upsertSync
-    ): Menu @update
+    ): Menu! @update
 
     deleteMenu(
         id: ID! @eq @rules(apply: ["required", "uuid"])
@@ -104,5 +104,5 @@ extend type Mutation @guard {
 
     copyMenu(
         id: ID! @eq @rules(apply: ["required", "uuid"])
-    ): Menu
+    ): Menu!
 }

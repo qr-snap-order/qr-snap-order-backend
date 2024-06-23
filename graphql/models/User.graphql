@@ -36,3 +36,9 @@ type User {
     "When the account was last updated."
     updated_at: DateTime!
 }
+
+type Mutation @guard {
+    createUser(
+        name: String! @rules(apply: ["required", "string", "max:255"])
+    ): User! @create
+}

@@ -19,7 +19,7 @@ extend type Mutation @guard {
         name: String! @rules(apply: ["required", "string", "max:255"])
 
         menuItems: [ID!]! @rules(apply: ["required", "uuid"]) @connectSync
-    ): Category @create
+    ): Category! @create
 
     updateCategory(
         id: ID! @rules(apply: ["required", "uuid"])
@@ -28,8 +28,8 @@ extend type Mutation @guard {
             @rules(apply: ["sometimes", "required", "string", "max:255"])
 
         menuItems: [ID!] @rules(apply: ["required", "uuid"]) @connectSync
-    ): Category @update
+    ): Category! @update
 
-    deleteCategory(id: ID! @eq @rules(apply: ["required", "uuid"])): Category
+    deleteCategory(id: ID! @eq @rules(apply: ["required", "uuid"])): Category!
         @delete
 }

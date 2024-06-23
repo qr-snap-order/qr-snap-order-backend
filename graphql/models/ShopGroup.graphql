@@ -19,7 +19,7 @@ extend type Mutation @guard {
         name: String! @rules(apply: ["required", "string", "max:255"])
 
         shops: [ID!]! @rules(apply: ["required", "uuid"]) @connectSync
-    ): ShopGroup @create
+    ): ShopGroup! @create
 
     updateShopGroup(
         id: ID! @rules(apply: ["required", "uuid"])
@@ -27,9 +27,9 @@ extend type Mutation @guard {
         name: String @rules(apply: ["sometimes", "required", "string", "max:255"])
 
         shops: [ID!]! @rules(apply: ["required", "uuid"]) @connectSync
-    ): ShopGroup @update
+    ): ShopGroup! @update
 
     deleteShopGroup(
         id: ID! @eq @rules(apply: ["required", "uuid"])
-    ): ShopGroup @delete
+    ): ShopGroup! @delete
 }

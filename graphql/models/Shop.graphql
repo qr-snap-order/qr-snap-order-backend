@@ -32,7 +32,7 @@ extend type Mutation @guard {
         name: String! @rules(apply: ["required", "string", "max:255"])
 
         employees: CreateShopEmployees
-    ): Shop @create
+    ): Shop! @create
 
     updateShop(
         id: ID! @rules(apply: ["required", "uuid"])
@@ -40,9 +40,9 @@ extend type Mutation @guard {
         name: String @rules(apply: ["sometimes", "required", "string", "max:255"])
 
         employees: UpdateShopEmployees
-    ): Shop @update
+    ): Shop! @update
 
     deleteShop(
         id: ID! @eq @rules(apply: ["required", "uuid"])
-    ): Shop @delete
+    ): Shop! @delete
 }
