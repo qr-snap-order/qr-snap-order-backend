@@ -18,7 +18,7 @@ trait HasRelation
      */
     public function tenant(): BelongsTo
     {
-        return $this->belongsTo(Tenant::class);
+        return $this->belongsTo(Tenant::class)->guardNull();
     }
 
     /**
