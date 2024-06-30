@@ -15,6 +15,8 @@ class MenuSection extends Model
     use HasUuids;
     use HasRelation;
 
+    protected $touches = ['menu'];
+
     /**
      * @var array<int, string> $cascadeDeletes
      */
