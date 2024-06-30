@@ -105,15 +105,18 @@ test('updateMenu mutation', function () {
         ->menuSections->get(0)->menuItems->get(0)->id->toBe($updatingMenuItem->id)
         ->menuSections->get(0)->menuItems->get(0)->name->toBe('烏龍茶')
         ->menuSections->get(0)->menuItems->get(0)->price->toBe(200)
+        ->menuSections->get(0)->menuItems->get(0)->sort_key->toBe(1)
         ->menuSections->get(0)->menuItems->get(1)->id->toBeString()
         ->menuSections->get(0)->menuItems->get(1)->name->toBe('コーラ')
         ->menuSections->get(0)->menuItems->get(1)->price->toBe(250)
+        ->menuSections->get(0)->menuItems->get(1)->sort_key->toBe(2)
         ->menuSections->get(1)->id->toBeString()
         ->menuSections->get(1)->name->toBe('肉料理')
         ->menuSections->get(1)->menuItems->toHaveCount(1)
         ->menuSections->get(1)->menuItems->get(0)->id->toBeString()
         ->menuSections->get(1)->menuItems->get(0)->name->toBe('ステーキ')
         ->menuSections->get(1)->menuItems->get(0)->price->toBe(1200)
+        ->menuSections->get(1)->menuItems->get(0)->sort_key->toBe(1)
         ->and($deletingMenuSection->fresh())->toBeNull()
         ->and($deletingMenuItem->fresh())->toBeNull();
 });

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignUuid('tenant_id')->default(TenantIsolation::sessionTenantIdExpression())->constrained();
             $table->foreignUuid('menu_id')->constrained();
             $table->string('name', 255);
+            $table->unsignedInteger('sort_key');
             $table->timestamps();
         });
 

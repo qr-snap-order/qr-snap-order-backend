@@ -3,7 +3,7 @@ type Menu {
 
     name: String!
 
-    menuSections: [MenuSection!]! @hasMany
+    menuSections: [MenuSection!]! @hasMany @orderBy(column: "sort_key", direction: ASC)
 }
 
 type MenuSection {
@@ -11,7 +11,7 @@ type MenuSection {
 
     name: String!
 
-    menuItems: [MenuItem!]! @hasMany
+    menuItems: [MenuItem!]! @hasMany @orderBy(column: "sort_key", direction: ASC)
 }
 
 type MenuItem {
@@ -32,7 +32,7 @@ type MenuItem {
 input CreateMenuSectionInput {
     name: String! @rules(apply: ["required", "string", "max:255"])
 
-    menuItems: [CreateMenuItemInput!]! @rulesForArray(apply: ["required"]) @create
+    menuItems: [CreateMenuItemInput!]! @rulesForArray(apply: ["required"]) @setSortKeys @create
 }
 
 input CreateMenuItemInput {
@@ -56,7 +56,7 @@ input UpdateMenuSectionInput {
 
     name: String!
 
-    menuItems: [UpdateMenuItemInput!]! @rulesForArray(apply: ["required"]) @upsertSync
+    menuItems: [UpdateMenuItemInput!]! @rulesForArray(apply: ["required"]) @setSortKeys @upsertSync
 }
 
 input UpdateMenuItemInput {
@@ -89,7 +89,7 @@ extend type Mutation @guard {
     createMenu(
         name: String! @rules(apply: ["required", "string", "max:255"])
 
-        menuSections: [CreateMenuSectionInput!]! @rulesForArray(apply: ["required"]) @create
+        menuSections: [CreateMenuSectionInput!]! @rulesForArray(apply: ["required"]) @setSortKeys @create
     ): Menu! @create
 
     updateMenu(
@@ -97,7 +97,7 @@ extend type Mutation @guard {
 
         name: String @rules(apply: ["sometimes", "required", "string", "max:255"])
 
-        menuSections: [UpdateMenuSectionInput] @rulesForArray(apply: ["sometimes", "required"]) @upsertSync
+        menuSections: [UpdateMenuSectionInput] @rulesForArray(apply: ["sometimes", "required"]) @setSortKeys @upsertSync
     ): Menu! @update
 
     deleteMenu(

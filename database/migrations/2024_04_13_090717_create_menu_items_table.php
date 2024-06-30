@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name', 255);
             $table->unsignedInteger('price');
             $table->string('image', 255)->nullable();
+            $table->unsignedInteger('sort_key');
             $table->timestamps();
         });
 

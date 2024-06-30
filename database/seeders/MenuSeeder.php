@@ -23,9 +23,18 @@ class MenuSeeder extends Seeder
         ])
             ->for($tenant)
             ->has(
-                MenuSection::factory(2)->for($tenant)
+                MenuSection::factory()->for($tenant)
                     ->has(
-                        MenuItem::factory(2)->for($tenant)
+                        MenuItem::factory()
+                            ->for($tenant)
+                            ->forEachSequence(
+                                ['sort_key' => 1],
+                                ['sort_key' => 2],
+                            )
+                    )
+                    ->forEachSequence(
+                        ['sort_key' => 1],
+                        ['sort_key' => 2],
                     )
             )
             ->create();

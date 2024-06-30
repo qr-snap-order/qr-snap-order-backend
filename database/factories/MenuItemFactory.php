@@ -18,7 +18,8 @@ class MenuItemFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'price' => $this->faker->biasedNumberBetween
+            'price' => $this->faker->biasedNumberBetween,
+            'sort_key' => 1,
         ];
     }
 }

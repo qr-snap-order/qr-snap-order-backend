@@ -107,11 +107,13 @@ test('createMenu mutation', function () {
         ->menuSections->get(0)->menuItems->get(0)->name->toBe('烏龍茶')
         ->menuSections->get(0)->menuItems->get(0)->price->toBe(200)
         ->menuSections->get(0)->menuItems->get(0)->image->toMatch('/^menu-item\/image\/\w{40}\.png$/')
+        ->menuSections->get(0)->menuItems->get(0)->sort_key->toBe(1)
         ->menuSections->get(0)->menuItems->get(0)->categories->toHaveCount(1)
         ->menuSections->get(0)->menuItems->get(0)->categories->get(0)->id->toBe($category->id)
         ->menuSections->get(0)->menuItems->get(1)->id->toBeString()
         ->menuSections->get(0)->menuItems->get(1)->name->toBe('コーラ')
         ->menuSections->get(0)->menuItems->get(1)->price->toBe(250)
         ->menuSections->get(0)->menuItems->get(1)->image->toBeNull()
+        ->menuSections->get(0)->menuItems->get(1)->sort_key->toBe(2)
         ->menuSections->get(0)->menuItems->get(1)->categories->toHaveCount(0);
 });

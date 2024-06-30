@@ -18,6 +18,7 @@ class MenuSectionFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
+            'sort_key' => 1,
         ];
     }
 }
