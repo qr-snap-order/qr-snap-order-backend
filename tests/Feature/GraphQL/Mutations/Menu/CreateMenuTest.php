@@ -31,7 +31,7 @@ test('createMenu mutation', function () {
                                     {
                                         name: "烏龍茶"
                                         price: 200
-                                        image: \$image
+                                        uploadImage: \$image
                                         categories: ["{$category->id}"]
                                     },
                                     {
