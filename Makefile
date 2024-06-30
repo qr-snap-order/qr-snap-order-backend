@@ -4,7 +4,7 @@ setup:
 	cp .env.example .env
 	@make composer-install
 	@make up
-	@make ide-helper-models
+	@make ide-helper
 	@make migrate
 	@make seed
 	@make s3-create-bucket
@@ -13,7 +13,10 @@ setup:
 composer-install:
 	docker run --rm -u "$$(id -u):$$(id -g)" -v "$$(pwd):/var/www/html" -w /var/www/html laravelsail/php82-composer:latest composer install --ignore-platform-reqs
 
-ide-helper-models:
+ide-helper:
+	./vendor/bin/sail artisan ide-helper:generate
+	./vendor/bin/sail artisan ide-helper:meta
+	./vendor/bin/sail artisan lighthouse:ide-helper
 	./vendor/bin/sail artisan ide-helper:models --nowrite
 
 passport-install:
