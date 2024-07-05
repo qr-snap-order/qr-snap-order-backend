@@ -26,9 +26,7 @@ test('createShop mutation', function () {
         mutation {
             createShop (
                 name: "東京支店"
-                employees: {
-                    connect: ["{$connectingEmployees[0]->id}", "{$connectingEmployees[1]->id}"]
-                }
+                employees: ["{$connectingEmployees[0]->id}", "{$connectingEmployees[1]->id}"]
             ) {
                 id
                 name

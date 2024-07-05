@@ -34,9 +34,7 @@ test('updateShop mutation', function () {
             updateShop (
                 id: "{$shop->id}"
                 name: "東京支店"
-                employees: {
-                    sync: ["{$connectingEmployees[0]->id}", "{$connectingEmployees[1]->id}"]
-                }
+                employees: ["{$connectingEmployees[0]->id}", "{$connectingEmployees[1]->id}"]
             ) {
                 id
                 name

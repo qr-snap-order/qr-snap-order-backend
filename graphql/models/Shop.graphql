@@ -10,15 +10,6 @@ type Shop {
     employees: [Employee!]! @belongsToMany @orderBy(column: "id", direction: ASC)
 }
 
-# TODO:: ネストが必要がどうか検討する（権限周りで選択項目に表示できないEmployeeがあったときにどうするかなど）
-input CreateShopEmployees {
-    connect: [ID!] @rules(apply: ["required", "uuid", "exists:employees,id"]) @rulesForArray(apply: ["max:1024"])
-}
-
-input UpdateShopEmployees {
-    sync: [ID!] @rules(apply: ["required", "uuid", "exists:employees,id"]) @rulesForArray(apply: ["max:1024"])
-}
-
 extend type Query @guard {
     shops: [Shop!]! @all @orderBy(column: "id", direction: ASC)
 
@@ -31,7 +22,7 @@ extend type Mutation @guard {
     createShop(
         name: String! @rules(apply: ["required", "string", "max:255"])
 
-        employees: CreateShopEmployees
+        employees: [ID!]! @rules(apply: ["required", "uuid", "exists:employees,id"]) @rulesForArray(apply: ["max:1024"]) @connectSync
     ): Shop! @create
 
     updateShop(
@@ -39,7 +30,7 @@ extend type Mutation @guard {
 
         name: String @rules(apply: ["sometimes", "required", "string", "max:255"])
 
-        employees: UpdateShopEmployees
+        employees: [ID!] @rules(apply: ["required", "uuid", "exists:employees,id"]) @rulesForArray(apply: ["max:1024"]) @connectSync
     ): Shop! @update
 
     deleteShop(
