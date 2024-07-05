@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Models\Concerns\Category;
+namespace App\Models\Concerns\MenuItemGroup;
 
-use App\Models\Category;
 use App\Models\MenuItem;
+use App\Models\MenuItemGroup;
 use App\Models\Tenant;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * @mixin Category
+ * @mixin MenuItemGroup
  */
 trait HasRelation
 {
     /**
-     * @return BelongsTo<Tenant, Category>
+     * @return BelongsTo<Tenant, MenuItemGroup>
      */
     public function tenant(): BelongsTo
     {
@@ -26,6 +26,6 @@ trait HasRelation
      */
     public function menuItems(): BelongsToMany
     {
-        return $this->belongsToMany(MenuItem::class, 'menu_item_category');
+        return $this->belongsToMany(MenuItem::class, 'menu_item_group_assignments');
     }
 }

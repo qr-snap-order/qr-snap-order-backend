@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
+use App\Models\MenuItemGroup;
 use App\Models\Tenant;
 use Illuminate\Database\Seeder;
 
-class CategorySeeder extends Seeder
+class MenuItemGroupSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +15,7 @@ class CategorySeeder extends Seeder
     {
         $tenant = Tenant::findOrFail('00000000-0000-0000-0000-000000000000');
 
-        Category::factory()
+        MenuItemGroup::factory()
             ->for($tenant)
             ->forEachSequence(
                 [
