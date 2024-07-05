@@ -2,6 +2,7 @@
 
 use App\Models\Employee;
 use App\Models\Shop;
+use App\Models\ShopGroup;
 use App\Models\Tenant;
 use App\Models\User;
 use Tests\TestCase;
@@ -13,7 +14,7 @@ test('createShop mutation', function () {
 
     $user = User::factory()->for($tenant)->create();
 
-    $connectingEmployees = Employee::factory()
+    $employees = Employee::factory()
         ->forEachSequence(
             ['name' => '田中'],
             ['name' => '佐藤'],
@@ -21,16 +22,28 @@ test('createShop mutation', function () {
         ->for($tenant)
         ->create();
 
-    $response = $this->domain($tenant)->actingAs($user)->graphQL(
-        /** @lang GraphQL */ <<<GRAPHQL
+    $shopGroups = ShopGroup::factory()
+        ->forEachSequence(
+            ['name' => '関東地区'],
+            ['name' => '関西地区'],
+        )
+        ->for($tenant)
+        ->create();
+
+    $response = $this->domain($tenant)->actingAs($user)->graphQL(/** @lang GraphQL */ <<<GRAPHQL
         mutation {
             createShop (
                 name: "東京支店"
-                employees: ["{$connectingEmployees[0]->id}", "{$connectingEmployees[1]->id}"]
+                employees: ["{$employees[0]->id}", "{$employees[1]->id}"]
+                shopGroups: ["{$shopGroups[0]->id}", "{$shopGroups[1]->id}"]
             ) {
                 id
                 name
                 employees {
+                    id
+                    name
+                }
+                shopGroups {
                     id
                     name
                 }
@@ -47,11 +60,16 @@ test('createShop mutation', function () {
         ->data->createShop->name->toBe('東京支店')
         ->data->createShop->employees->toHaveCount(2)
         ->data->createShop->employees->{0}->name->toBe('田中')
-        ->data->createShop->employees->{1}->name->toBe('佐藤');
+        ->data->createShop->employees->{1}->name->toBe('佐藤')
+        ->data->createShop->shopGroups->toHaveCount(2)
+        ->data->createShop->shopGroups->{0}->name->toBe('関東地区')
+        ->data->createShop->shopGroups->{1}->name->toBe('関西地区');
 
     expect(Shop::findOrFail($response->json('data.createShop.id')))
         ->name->toBe('東京支店')
         ->employees->toHaveCount(2)
         ->employees->get(0)->name->toBe('田中')
-        ->employees->get(1)->name->toBe('佐藤');
+        ->employees->get(1)->name->toBe('佐藤')
+        ->shopGroups->get(0)->name->toBe('関東地区')
+        ->shopGroups->get(1)->name->toBe('関西地区');
 });

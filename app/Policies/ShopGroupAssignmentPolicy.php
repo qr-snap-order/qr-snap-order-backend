@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\ShopGroupShop;
+use App\Models\ShopGroupAssignment;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class ShopGroupShopPolicy
+class ShopGroupAssignmentPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,7 +19,7 @@ class ShopGroupShopPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, ShopGroupShop $shopGroupShop): bool
+    public function view(User $user, ShopGroupAssignment $ShopGroupAssignment): bool
     {
         throw new \Exception('unimplemented.');
     }
@@ -35,7 +35,7 @@ class ShopGroupShopPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, ShopGroupShop $shopGroupShop): bool
+    public function update(User $user, ShopGroupAssignment $ShopGroupAssignment): bool
     {
         throw new \Exception('unimplemented.');
     }
@@ -43,7 +43,7 @@ class ShopGroupShopPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, ShopGroupShop $shopGroupShop): bool
+    public function delete(User $user, ShopGroupAssignment $ShopGroupAssignment): bool
     {
         throw new \Exception('unimplemented.');
     }
@@ -51,7 +51,7 @@ class ShopGroupShopPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, ShopGroupShop $shopGroupShop): bool
+    public function restore(User $user, ShopGroupAssignment $ShopGroupAssignment): bool
     {
         throw new \Exception('unimplemented.');
     }
@@ -59,7 +59,7 @@ class ShopGroupShopPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, ShopGroupShop $shopGroupShop): bool
+    public function forceDelete(User $user, ShopGroupAssignment $ShopGroupAssignment): bool
     {
         throw new \Exception('unimplemented.');
     }

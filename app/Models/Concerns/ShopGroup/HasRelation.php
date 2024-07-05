@@ -4,7 +4,7 @@ namespace App\Models\Concerns\ShopGroup;
 
 use App\Models\Shop;
 use App\Models\ShopGroup;
-use App\Models\ShopGroupShop;
+use App\Models\ShopGroupAssignment;
 use App\Models\Tenant;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -27,6 +27,6 @@ trait HasRelation
      */
     public function shops(): BelongsToMany
     {
-        return $this->belongsToMany(Shop::class, 'shop_group_shop')->using(ShopGroupShop::class);
+        return $this->belongsToMany(Shop::class, 'shop_group_assignments')->using(ShopGroupAssignment::class);
     }
 }

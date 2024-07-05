@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shop_group_shop', function (Blueprint $table) {
+        Schema::create('shop_group_assignments', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('tenant_id')->default(TenantIsolation::sessionTenantIdExpression())->constrained();
             $table->foreignUuid('shop_group_id')->constrained();
@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        TenantIsolation::grantIsolationRowAccessToTenantRole('shop_group_shop', 'tenant_id');
+        TenantIsolation::grantIsolationRowAccessToTenantRole('shop_group_assignments', 'tenant_id');
     }
 
     /**
@@ -27,8 +27,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        TenantIsolation::revokeIsolationRowAccessFromTenantRole('shop_group_shop');
+        TenantIsolation::revokeIsolationRowAccessFromTenantRole('shop_group_assignments');
 
-        Schema::dropIfExists('shop_group_shop');
+        Schema::dropIfExists('shop_group_assignments');
     }
 };

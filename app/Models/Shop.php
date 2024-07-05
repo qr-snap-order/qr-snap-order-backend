@@ -18,5 +18,5 @@ class Shop extends Model
     /**
      * @var array<int, string> $cascadeDeletes
      */
-    protected array $cascadeDeletes = ['employees'];
+    protected array $cascadeDeletes = ['employees', 'shopGroups'];
 }

@@ -8,6 +8,8 @@ type Shop {
     tenant: Tenant!
 
     employees: [Employee!]! @belongsToMany @orderBy(column: "id", direction: ASC)
+
+    shopGroups: [ShopGroup!]! @belongsToMany @orderBy(column: "id", direction: ASC)
 }
 
 extend type Query @guard {
@@ -23,6 +25,8 @@ extend type Mutation @guard {
         name: String! @rules(apply: ["required", "string", "max:255"])
 
         employees: [ID!]! @rules(apply: ["required", "uuid", "exists:employees,id"]) @rulesForArray(apply: ["max:1024"]) @connectSync
+
+        shopGroups: [ID!]! @rules(apply: ["required", "uuid", "exists:shop_groups,id"]) @rulesForArray(apply: ["max:1024"]) @connectSync
     ): Shop! @create
 
     updateShop(
@@ -31,6 +35,8 @@ extend type Mutation @guard {
         name: String @rules(apply: ["sometimes", "required", "string", "max:255"])
 
         employees: [ID!] @rules(apply: ["required", "uuid", "exists:employees,id"]) @rulesForArray(apply: ["max:1024"]) @connectSync
+
+        shopGroups: [ID!] @rules(apply: ["required", "uuid", "exists:shop_groups,id"]) @rulesForArray(apply: ["max:1024"]) @connectSync
     ): Shop! @update
 
     deleteShop(

@@ -15,6 +15,9 @@ class MenuItem extends Model
     use HasUuids;
     use HasRelation;
 
+    /**
+     * @var array<int, string> $touches
+     */
     protected $touches = ['menuSection'];
 
     /**
