@@ -28,7 +28,7 @@ trait HasRelation
      */
     public function employees(): BelongsToMany
     {
-        return $this->belongsToMany(Employee::class);
+        return $this->belongsToMany(Employee::class, 'shop_employee');
     }
 
     /**

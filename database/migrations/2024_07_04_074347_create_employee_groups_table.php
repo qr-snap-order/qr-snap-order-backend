@@ -1,6 +1,5 @@
 <?php
 
-use App\Facades\TenantIsolation;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shop_employee', function (Blueprint $table) {
+        Schema::create('employee_groups', function (Blueprint $table) {
+            $table->uuid('id')->primary();
             $table->foreignUuid('tenant_id')->default(TenantIsolation::sessionTenantIdExpression())->constrained();
-            $table->foreignUuid('shop_id')->constrained();
-            $table->foreignUuid('employee_id')->constrained();
-            $table->primary(['shop_id', 'employee_id']);
+            $table->string('name', 255);
             $table->timestamps();
         });
 
-        TenantIsolation::grantIsolationRowAccessToTenantRole('shop_employee', 'tenant_id');
+        TenantIsolation::grantIsolationRowAccessToTenantRole('employee_groups', 'tenant_id');
     }
 
     /**
@@ -28,8 +26,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        TenantIsolation::revokeIsolationRowAccessFromTenantRole('shop_employee');
+        TenantIsolation::revokeIsolationRowAccessFromTenantRole('employee_groups');
 
-        Schema::dropIfExists('shop_employee');
+        Schema::dropIfExists('employee_groups');
     }
 };

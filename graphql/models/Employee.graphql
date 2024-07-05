@@ -7,11 +7,13 @@ type Employee {
 
     tenant: Tenant!
 
-    shops: [Shop!]! @belongsToMany @orderBy(column: "id", direction: DESC)
+    shops: [Shop!]! @belongsToMany @orderBy(column: "id", direction: ASC)
+
+    employeeGroups: [ShopGroup!]! @belongsToMany @orderBy(column: "id", direction: ASC)
 }
 
 extend type Query @guard {
-    employees: [Employee!]! @all @orderBy(column: "id", direction: DESC)
+    employees: [Employee!]! @all @orderBy(column: "id", direction: ASC)
 
     employee(
         id: ID! @eq @rules(apply: ["required", "uuid"])
@@ -21,5 +23,23 @@ extend type Query @guard {
 extend type Mutation @guard {
     createEmployee(
         name: String! @rules(apply: ["required", "string", "max:255"])
+
+        shops: [ID!]! @rules(apply: ["required", "uuid", "exists:shops,id"]) @rulesForArray(apply: ["max:1024"]) @connectSync
+
+        employeeGroups: [ID!]! @rules(apply: ["required", "uuid", "exists:employee_groups,id"]) @rulesForArray(apply: ["max:1024"]) @connectSync
     ): Employee! @create
+
+    updateEmployee(
+        id: ID! @rules(apply: ["required", "uuid"])
+
+        name: String @rules(apply: ["sometimes", "required", "string", "max:255"])
+
+        shops: [ID!] @rules(apply: ["required", "uuid", "exists:shops,id"]) @rulesForArray(apply: ["max:1024"]) @connectSync
+
+        employeeGroups: [ID!] @rules(apply: ["required", "uuid", "exists:employee_groups,id"]) @rulesForArray(apply: ["max:1024"]) @connectSync
+    ): Employee! @update
+
+    deleteEmployee(
+        id: ID! @eq @rules(apply: ["required", "uuid"])
+    ): Employee! @delete
 }

@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\Concerns\Employee\HasRelation;
+use App\Models\Concerns\EmployeeGroup\HasRelation;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use ShiftOneLabs\LaravelCascadeDeletes\CascadesDeletes;
 
-class Employee extends Model
+class EmployeeGroup extends Model
 {
     use CascadesDeletes;
     use HasFactory;
@@ -18,5 +18,5 @@ class Employee extends Model
     /**
      * @var array<int, string> $cascadeDeletes
      */
-    protected array $cascadeDeletes = ['shops', 'employeeGroups'];
+    protected array $cascadeDeletes = ['employees'];
 }
