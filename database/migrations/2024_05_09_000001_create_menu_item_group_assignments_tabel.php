@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('menu_item_group_assignments', function (Blueprint $table) {
+            $table->uuid('id')->primary();
             $table->foreignUuid('tenant_id')->default(TenantIsolation::sessionTenantIdExpression())->constrained();
             $table->foreignUuid('menu_item_id')->constrained();
             $table->foreignUuid('menu_item_group_id')->constrained();

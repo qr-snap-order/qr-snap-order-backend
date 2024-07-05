@@ -4,6 +4,7 @@ namespace App\Models\Concerns\MenuItem;
 
 use App\Models\MenuItem;
 use App\Models\MenuItemGroup;
+use App\Models\MenuItemGroupAssignment;
 use App\Models\MenuSection;
 use App\Models\Tenant;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -35,6 +36,6 @@ trait HasRelation
      */
     public function menuItemGroups(): BelongsToMany
     {
-        return $this->belongsToMany(MenuItemGroup::class, 'menu_item_group_assignments');
+        return $this->belongsToMany(MenuItemGroup::class, 'menu_item_group_assignments')->using(MenuItemGroupAssignment::class);
     }
 }
