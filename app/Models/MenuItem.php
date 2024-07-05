@@ -20,5 +20,5 @@ class MenuItem extends Model
     /**
      * @var array<int, string> $cascadeDeletes
      */
-    protected array $cascadeDeletes = ['categories'];
+    protected array $cascadeDeletes = ['menuItemGroups'];
 }

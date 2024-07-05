@@ -2,8 +2,8 @@
 
 namespace App\Models\Concerns\MenuItem;
 
-use App\Models\Category;
 use App\Models\MenuItem;
+use App\Models\MenuItemGroup;
 use App\Models\MenuSection;
 use App\Models\Tenant;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,10 +31,10 @@ trait HasRelation
     }
 
     /**
-     * @return BelongsToMany<Category>
+     * @return BelongsToMany<MenuItemGroup>
      */
-    public function categories(): BelongsToMany
+    public function menuItemGroups(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class, 'menu_item_category');
+        return $this->belongsToMany(MenuItemGroup::class, 'menu_item_group_assignments');
     }
 }

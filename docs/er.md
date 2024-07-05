@@ -14,5 +14,5 @@ erDiagram
 erDiagram
     menus ||--o{ menu_sections : ""
     menu_sections ||--o{ menu_items : ""
-    menu_items }o--o{ categories : ""
+    menu_items }o--o{ menu_item_groups : ""
 ```

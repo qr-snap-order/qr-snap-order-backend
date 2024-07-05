@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('menu_item_category', function (Blueprint $table) {
+        Schema::create('menu_item_groups', function (Blueprint $table) {
+            $table->uuid('id')->primary();
             $table->foreignUuid('tenant_id')->default(TenantIsolation::sessionTenantIdExpression())->constrained();
-            $table->foreignUuid('menu_item_id')->constrained();
-            $table->foreignUuid('category_id')->constrained();
+            $table->string('name', 255);
             $table->timestamps();
         });
 
-        TenantIsolation::grantIsolationRowAccessToTenantRole('menu_item_category', 'tenant_id');
+        TenantIsolation::grantIsolationRowAccessToTenantRole('menu_item_groups', 'tenant_id');
     }
 
     /**
@@ -26,8 +26,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        TenantIsolation::revokeIsolationRowAccessFromTenantRole('menu_item_category');
+        TenantIsolation::revokeIsolationRowAccessFromTenantRole('menu_item_groups');
 
-        Schema::dropIfExists('menu_item_category');
+        Schema::dropIfExists('menu_item_groups');
     }
 };

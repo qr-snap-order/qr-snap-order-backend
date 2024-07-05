@@ -1,8 +1,8 @@
-## Category
+## MenuItemGroup
 
 ```graphql
 query {
-    categories {
+    menuItemGroups {
         id
         name
         menuItems {
@@ -13,7 +13,7 @@ query {
 }
 
 query {
-    category(id: "00000000-0000-0000-0000-000000000000") {
+    menuItemGroup(id: "00000000-0000-0000-0000-000000000000") {
         id
         name
         menuItems {
@@ -24,7 +24,7 @@ query {
 }
 
 mutation {
-    createCategory(
+    createMenuItemGroup(
         name: "夏季限定"
         menuItems: ["00000000-0000-0000-0000-000000000000"]
     ) {
@@ -38,7 +38,7 @@ mutation {
 }
 
 mutation {
-    updateCategory(
+    updateMenuItemGroup(
         id: "00000000-0000-0000-0000-000000000000"
         name: "夏季限定"
         menuItems: ["00000000-0000-0000-0000-000000000000"]
@@ -53,7 +53,7 @@ mutation {
 }
 
 mutation {
-    deleteCategory(
+    deleteMenuItemGroup(
         id: "00000000-0000-0000-0000-000000000000"
     ) {
         id

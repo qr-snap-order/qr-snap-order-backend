@@ -26,7 +26,7 @@ type MenuItem {
 
     image: String
 
-    categories: [Category!]! @belongsToMany
+    menuItemGroups: [MenuItemGroup!]! @belongsToMany
 }
 
 input CreateMenuSectionInput {
@@ -45,7 +45,7 @@ input CreateMenuItemInput {
 
     uploadImage: Upload @upload(disk: "s3", path: "menu-item/image", public: true) @rules(apply: ["nullable", "image", "max:2048"]) @rename(attribute: "image")
 
-    categories: [ID!]! @rules(apply: ["required", "uuid"]) @connectSync
+    menuItemGroups: [ID!]! @rules(apply: ["required", "uuid"]) @connectSync
 }
 
 input UpdateMenuSectionInput {
@@ -74,7 +74,7 @@ input UpdateMenuItemInput {
 
     uploadImage: Upload @upload(disk: "s3", path: "menu-item/image", public: true) @rules(apply: ["nullable", "image", "max:2048"]) @rename(attribute: "image")
 
-    categories: [ID!] @rules(apply: ["required", "uuid"]) @connectSync
+    menuItemGroups: [ID!] @rules(apply: ["required", "uuid"]) @connectSync
 }
 
 extend type Query @guard {

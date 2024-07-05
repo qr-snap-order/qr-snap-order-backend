@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\Concerns\Category\HasRelation;
+use App\Models\Concerns\MenuItemGroup\HasRelation;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use ShiftOneLabs\LaravelCascadeDeletes\CascadesDeletes;
 
-class Category extends Model
+class MenuItemGroup extends Model
 {
     use CascadesDeletes;
     use HasFactory;
