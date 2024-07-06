@@ -13,19 +13,19 @@ test('updateShopGroup mutation', function () {
 
     $user = User::factory()->for($tenant)->create();
 
-    $shop = Shop::factory()->for($tenant)->create();
-
-    $shopGroup = ShopGroup::factory()
-        ->for($tenant)
-        ->hasAttached($shop, ['tenant_id' => $tenant->id])
-        ->create();
-
-    $connectingShops = Shop::factory()
+    $shops = Shop::factory()
         ->forEachSequence(
             ['name' => '東京支店'],
             ['name' => '千葉支店'],
+            ['name' => '神奈川支店'],
         )
         ->for($tenant)
+        ->create();
+
+    $shopGroup = ShopGroup::factory()
+        ->for($tenant)
+        ->hasAttached($shops[0], ['tenant_id' => $tenant->id])
+        ->hasAttached($shops[1], ['tenant_id' => $tenant->id])
         ->create();
 
     $response = $this->domain($tenant)->actingAs($user)->graphQL(
@@ -34,7 +34,7 @@ test('updateShopGroup mutation', function () {
             updateShopGroup (
                 id: "{$shopGroup->id}"
                 name: "関東店舗グループ"
-                shops: ["{$connectingShops[0]->id}", "{$connectingShops[1]->id}"]
+                shops: ["{$shops[1]->id}", "{$shops[2]->id}"]
 
             ) {
                 id
@@ -56,14 +56,14 @@ test('updateShopGroup mutation', function () {
         ->data->updateShopGroup->id->toBe($shopGroup->id)
         ->data->updateShopGroup->name->toBe('関東店舗グループ')
         ->data->updateShopGroup->shops->toHaveCount(2)
-        ->data->updateShopGroup->shops->{0}->name->toBe('東京支店')
-        ->data->updateShopGroup->shops->{1}->name->toBe('千葉支店');
+        ->data->updateShopGroup->shops->{0}->name->toBe('千葉支店')
+        ->data->updateShopGroup->shops->{1}->name->toBe('神奈川支店');
 
     expect($shopGroup->fresh())
         ->name->toBe('関東店舗グループ')
         ->shops->toHaveCount(2)
-        ->shops->get(0)->name->toBe('東京支店')
-        ->shops->get(1)->name->toBe('千葉支店');
+        ->shops->get(0)->name->toBe('千葉支店')
+        ->shops->get(1)->name->toBe('神奈川支店');
 
-    expect($shop->fresh())->not->toBeNull(); // disconnectするだけで、Shopは削除されてないことを確認
+    expect($shops[0]->fresh())->not->toBeNull(); // disconnectするだけで、Shopは削除されてないことを確認
 });

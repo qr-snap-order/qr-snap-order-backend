@@ -13,7 +13,7 @@ test('createShopGroup mutation', function () {
 
     $user = User::factory()->for($tenant)->create();
 
-    $connectingShops = Shop::factory()
+    $shops = Shop::factory()
         ->forEachSequence(
             ['name' => '東京支店'],
             ['name' => '千葉支店'],
@@ -26,7 +26,7 @@ test('createShopGroup mutation', function () {
         mutation {
             createShopGroup (
                 name: "関東店舗グループ"
-                shops: ["{$connectingShops[0]->id}", "{$connectingShops[1]->id}"]
+                shops: ["{$shops[0]->id}", "{$shops[1]->id}"]
 
             ) {
                 id
