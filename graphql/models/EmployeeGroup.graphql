@@ -1,0 +1,35 @@
+type EmployeeGroup {
+    id: ID!
+
+    name: String!
+
+    employees: [Employee!]! @belongsToMany @orderBy(column: "id", direction: ASC)
+}
+
+extend type Query @guard {
+    employeeGroups: [EmployeeGroup!]! @all @orderBy(column: "id", direction: ASC)
+
+    employeeGroup(
+        id: ID! @eq @rules(apply: ["required", "uuid"])
+    ): EmployeeGroup @find
+}
+
+extend type Mutation @guard {
+    createEmployeeGroup(
+        name: String! @rules(apply: ["required", "string", "max:255"])
+
+        employees: [ID!]! @rules(apply: ["required", "uuid"]) @connectSync
+    ): EmployeeGroup! @create
+
+    updateEmployeeGroup(
+        id: ID! @rules(apply: ["required", "uuid"])
+
+        name: String @rules(apply: ["sometimes", "required", "string", "max:255"])
+
+        employees: [ID!]! @rules(apply: ["required", "uuid"]) @connectSync
+    ): EmployeeGroup! @update
+
+    deleteEmployeeGroup(
+        id: ID! @eq @rules(apply: ["required", "uuid"])
+    ): EmployeeGroup! @delete
+}
