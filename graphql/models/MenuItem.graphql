@@ -1,0 +1,45 @@
+type MenuItem {
+    id: ID!
+
+    name: String!
+
+    """
+    税抜価格
+    """
+    price: Int!
+
+    image: String
+
+    menuItemGroups: [MenuItemGroup!]! @belongsToMany
+}
+
+input CreateMenuItemInput {
+    name: String! @rules(apply: ["required", "string", "max:255"])
+
+    """
+    税抜価格
+    """
+    price: Int! @rules(apply: ["required", "integer", "between:0,1000000"])
+
+    uploadImage: Upload @upload(disk: "s3", path: "menu-item/image", public: true) @rules(apply: ["nullable", "image", "max:2048"]) @rename(attribute: "image")
+
+    menuItemGroups: [ID!]! @rules(apply: ["required", "uuid"]) @connectSync
+}
+
+input UpdateMenuItemInput {
+    """
+    追加の場合は指定しない
+    """
+    id: ID @rules(apply: ["sometimes", "required", "uuid"])
+
+    name: String @rules(apply: ["sometimes", "required", "string", "max:255"])
+
+    """
+    税抜価格
+    """
+    price: Int @rules(apply: ["sometimes", "required", "integer", "between:0,1000000"])
+
+    uploadImage: Upload @upload(disk: "s3", path: "menu-item/image", public: true) @rules(apply: ["nullable", "image", "max:2048"]) @rename(attribute: "image")
+
+    menuItemGroups: [ID!] @rules(apply: ["required", "uuid"]) @connectSync
+}
