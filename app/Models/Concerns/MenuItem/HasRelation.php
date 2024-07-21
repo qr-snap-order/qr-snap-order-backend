@@ -20,7 +20,7 @@ trait HasRelation
      */
     public function tenant(): BelongsTo
     {
-        return $this->belongsTo(Tenant::class)->guardNull();
+        return $this->belongsTo(Tenant::class);
     }
 
     /**
@@ -28,7 +28,7 @@ trait HasRelation
      */
     public function menuSection(): BelongsTo
     {
-        return $this->BelongsTo(MenuSection::class)->guardNull();
+        return $this->BelongsTo(MenuSection::class);
     }
 
     /**

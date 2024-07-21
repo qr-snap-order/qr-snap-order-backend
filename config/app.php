@@ -169,7 +169,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\DatabaseQueryServiceProvider::class,
-        App\Providers\RegisterRelationMacroProvider::class,
     ])->toArray(),
 
     /*
