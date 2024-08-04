@@ -31,7 +31,7 @@ test('createMenu mutation', function () {
                                     {
                                         name: "烏龍茶"
                                         price: 200
-                                        uploadImage: \$image
+                                        image: \$image
                                         menuItemGroups: ["{$menuItemGroup->id}"]
                                     },
                                     {
@@ -87,7 +87,7 @@ test('createMenu mutation', function () {
         ->data->createMenu->menuSections->{0}->menuItems->{0}->id->toBeString()
         ->data->createMenu->menuSections->{0}->menuItems->{0}->name->toBe('烏龍茶')
         ->data->createMenu->menuSections->{0}->menuItems->{0}->price->toBe(200)
-        ->data->createMenu->menuSections->{0}->menuItems->{0}->image->toMatch('/^menu-item\/image\/\w{40}\.png$/')
+        ->data->createMenu->menuSections->{0}->menuItems->{0}->image->toMatch('/\/menu-item\/image\/\w{40}\.png$/') // image url
         ->data->createMenu->menuSections->{0}->menuItems->{0}->menuItemGroups->toHaveCount(1)
         ->data->createMenu->menuSections->{0}->menuItems->{0}->menuItemGroups->{0}->id->toBe($menuItemGroup->id)
         ->data->createMenu->menuSections->{0}->menuItems->{1}->id->toBeString()

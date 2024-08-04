@@ -8,7 +8,7 @@ type MenuItem {
     """
     price: Int!
 
-    image: String
+    image: String @rename(attribute: "image_url")
 
     menuItemGroups: [MenuItemGroup!]! @belongsToMany
 }
@@ -21,7 +21,7 @@ input CreateMenuItemInput {
     """
     price: Int! @rules(apply: ["required", "integer", "between:0,1000000"])
 
-    uploadImage: Upload @upload(disk: "s3", path: "menu-item/image", public: true) @rules(apply: ["nullable", "image", "max:2048"]) @rename(attribute: "image")
+    image: Upload @upload(disk: "s3", path: "menu-item/image", public: true) @rules(apply: ["nullable", "image", "max:2048"])
 
     menuItemGroups: [ID!]! @rules(apply: ["required", "uuid"]) @connectSync
 }
@@ -39,7 +39,7 @@ input UpdateMenuItemInput {
     """
     price: Int @rules(apply: ["sometimes", "required", "integer", "between:0,1000000"])
 
-    uploadImage: Upload @upload(disk: "s3", path: "menu-item/image", public: true) @rules(apply: ["nullable", "image", "max:2048"]) @rename(attribute: "image")
+    image: Upload @upload(disk: "s3", path: "menu-item/image", public: true) @rules(apply: ["nullable", "image", "max:2048"])
 
     menuItemGroups: [ID!] @rules(apply: ["required", "uuid"]) @connectSync
 }
