@@ -14,7 +14,7 @@ input CreateMenuSectionInput {
 
 input UpdateMenuSectionInput {
     """
-    追加の場合は指定しない
+    指定なし、もしくは指定されたIDに対応するレコードがない場合は追加。
     """
     id: ID @rules(apply: ["sometimes", "required", "uuid"])
 

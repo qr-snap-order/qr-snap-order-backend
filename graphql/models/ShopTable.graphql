@@ -1,0 +1,7 @@
+type ShopTable {
+    id: ID!
+
+    name: String!
+
+    qr_code: String!
+}

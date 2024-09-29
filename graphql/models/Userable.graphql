@@ -1,0 +1,6 @@
+# TODO:: unionもしくはinterfaceにしたい。
+type Userable {
+    id: ID!
+
+    name: String!
+}

@@ -1,0 +1,13 @@
+type OrderItemStatus {
+    id: ID!
+
+    name: String!
+
+    color: String!
+}
+
+extend type Query @guard {
+    orderItemStatuses: [OrderItemStatus!]!
+        @all
+        @orderBy(column: "sort_key", direction: ASC)
+}

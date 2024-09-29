@@ -1,0 +1,9 @@
+type OrderItemHistory {
+    id: ID!
+
+    orderItemStatus: OrderItemStatus! @belongsTo
+
+    userable: Userable! @morphTo
+
+    created_at: DateTime!
+}

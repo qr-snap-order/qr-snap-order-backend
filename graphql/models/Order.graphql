@@ -1,0 +1,42 @@
+type Order {
+    id: ID!
+
+    orderItems: [OrderItem!]! @hasMany @orderBy(column: "id", direction: ASC)
+
+    shopTable: ShopTable! @belongsTo
+
+    created_at: DateTime!
+
+    updated_at: DateTime!
+}
+
+extend type Query @guard {
+    orders(
+        date: Date! @scope(name: "byDate")
+        shop_id: ID! @rules(apply: ["required", "uuid"]) @scope(name: "byShop")
+    ): [Order!]! @all @orderBy(column: "id", direction: ASC)
+
+    order(id: ID! @eq @rules(apply: ["required", "uuid"])): Order @find
+}
+
+extend type Mutation @guard {
+    createOrder(
+        shop_table_id: ID!
+            @rules(apply: ["required", "uuid", "exists:shop_tables,id"])
+
+        orderItems: [CreateOrderItemInput!]! @create
+    ): Order! @create
+
+    updateOrder(
+        id: ID! @rules(apply: ["required", "uuid", "exists:orders,id"])
+
+        shop_table_id: ID
+            @rules(apply: ["sometimes", "required", "uuid", "exists:shop_tables,id"])
+
+        orderItems: [UpdateOrderItemInput!] @rulesForArray(apply: ["max:1024"]) @upsertSync 
+    ): Order! @update
+
+    deleteOrder(
+        id: ID! @eq @rules(apply: ["required", "uuid"])
+    ): Order! @delete
+}

@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             ShopSeeder::class,
             EmployeeSeeder::class,
             MenuSeeder::class,
+            OrderItemStatusSeeder::class, // TODO:: Tenant作成時に初期データとしてリスナーで実行する
+            OrderSeeder::class,
         ]);
     }
 }

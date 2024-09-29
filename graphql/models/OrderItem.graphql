@@ -1,0 +1,72 @@
+type OrderItem {
+    id: ID!
+
+    """
+    注文時の商品税抜価格
+    """
+    price: Int!
+
+    count: Int!
+
+    menuItem: MenuItem! @belongsTo
+
+    """
+    最終ステータス
+    """
+    orderItemStatus: OrderItemStatus! @belongsTo
+
+    orderItemHistories: [OrderItemHistory!]! @hasMany
+
+    created_at: DateTime
+}
+
+input CreateOrderItemInput {
+    menu_item_id: ID!
+        @rules(apply: ["required", "uuid", "exists:menu_items,id"])
+
+    count: Int! @rules(apply: ["required", "integer", "between:1,100"])
+
+    """
+    注文時の商品税抜価格
+    顧客からの注文時には、マスター価格と一致しているかのチェックが必要。
+    """
+    price: Int! @rules(apply: ["required", "integer", "between:0,1000000"])
+}
+
+input UpdateOrderItemInput {
+    """
+    指定なし、もしくは指定されたIDに対応するレコードがない場合は追加。
+    """
+    id: ID @rules(apply: ["sometimes", "required", "uuid"])
+
+    """
+    NOTE:: 更新だけでなく追加も兼ねるので、追加の場合は指定が必要になるが、バリデーションが難しい。他フィールドも同様。
+    """
+    menu_item_id: ID
+        @rules(apply: ["sometimes", "required", "uuid", "exists:menu_items,id"])
+
+    count: Int
+        @rules(apply: ["sometimes", "required", "integer", "between:1,100"])
+
+    price: Int
+        @rules(apply: ["sometimes", "required", "integer", "between:0,1000000"])
+
+    order_item_status_id: ID
+        @rules(
+            apply: [
+                "sometimes"
+                "required"
+                "uuid"
+                "exists:order_item_statuses,id"
+            ]
+        )
+}
+
+extend type Mutation @guard {
+    updateOrderItem(
+        id: ID! @rules(apply: ["required", "uuid", "exists:order_items,id"])
+
+        order_item_status_id: ID!
+            @rules(apply: ["required", "uuid", "exists:order_item_statuses,id"])
+    ): OrderItem! @update
+}

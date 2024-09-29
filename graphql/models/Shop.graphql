@@ -10,6 +10,8 @@ type Shop {
     employees: [Employee!]! @belongsToMany @orderBy(column: "id", direction: ASC)
 
     shopGroups: [ShopGroup!]! @belongsToMany @orderBy(column: "id", direction: ASC)
+
+    shopTables: [ShopTable!]! @belongsToMany @orderBy(column: "id", direction: ASC)
 }
 
 extend type Query @guard {
