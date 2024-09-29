@@ -31,12 +31,19 @@ extend type Mutation @guard {
         id: ID! @rules(apply: ["required", "uuid", "exists:orders,id"])
 
         shop_table_id: ID
-            @rules(apply: ["sometimes", "required", "uuid", "exists:shop_tables,id"])
+            @rules(
+                apply: [
+                    "sometimes"
+                    "required"
+                    "uuid"
+                    "exists:shop_tables,id"
+                ]
+            )
 
-        orderItems: [UpdateOrderItemInput!] @rulesForArray(apply: ["max:1024"]) @upsertSync 
+        orderItems: [UpdateOrderItemInput!]
+            @rulesForArray(apply: ["max:1024"])
+            @upsertSync
     ): Order! @update
 
-    deleteOrder(
-        id: ID! @eq @rules(apply: ["required", "uuid"])
-    ): Order! @delete
+    deleteOrder(id: ID! @eq @rules(apply: ["required", "uuid"])): Order! @delete
 }

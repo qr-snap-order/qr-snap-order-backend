@@ -3,37 +3,40 @@ type Menu {
 
     name: String!
 
-    menuSections: [MenuSection!]! @hasMany @orderBy(column: "sort_key", direction: ASC)
+    menuSections: [MenuSection!]!
+        @hasMany
+        @orderBy(column: "sort_key", direction: ASC)
 }
 
 extend type Query @guard {
     menus: [Menu!]! @all @orderBy(column: "id", direction: DESC)
 
-    menu(
-        id: ID! @eq @rules(apply: ["required", "uuid"])
-    ): Menu @find
+    menu(id: ID! @eq @rules(apply: ["required", "uuid"])): Menu @find
 }
 
 extend type Mutation @guard {
     createMenu(
         name: String! @rules(apply: ["required", "string", "max:255"])
 
-        menuSections: [CreateMenuSectionInput!]! @rulesForArray(apply: ["required"]) @setSortKeys @create
+        menuSections: [CreateMenuSectionInput!]!
+            @rulesForArray(apply: ["required"])
+            @setSortKeys
+            @create
     ): Menu! @create
 
     updateMenu(
         id: ID! @rules(apply: ["required", "uuid"])
 
-        name: String @rules(apply: ["sometimes", "required", "string", "max:255"])
+        name: String
+            @rules(apply: ["sometimes", "required", "string", "max:255"])
 
-        menuSections: [UpdateMenuSectionInput] @rulesForArray(apply: ["sometimes", "required"]) @setSortKeys @upsertSync
+        menuSections: [UpdateMenuSectionInput]
+            @rulesForArray(apply: ["sometimes", "required"])
+            @setSortKeys
+            @upsertSync
     ): Menu! @update
 
-    deleteMenu(
-        id: ID! @eq @rules(apply: ["required", "uuid"])
-    ): Menu @delete
+    deleteMenu(id: ID! @eq @rules(apply: ["required", "uuid"])): Menu @delete
 
-    copyMenu(
-        id: ID! @eq @rules(apply: ["required", "uuid"])
-    ): Menu!
+    copyMenu(id: ID! @eq @rules(apply: ["required", "uuid"])): Menu!
 }

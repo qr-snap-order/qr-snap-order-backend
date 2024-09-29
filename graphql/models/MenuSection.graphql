@@ -3,13 +3,18 @@ type MenuSection {
 
     name: String!
 
-    menuItems: [MenuItem!]! @hasMany @orderBy(column: "sort_key", direction: ASC)
+    menuItems: [MenuItem!]!
+        @hasMany
+        @orderBy(column: "sort_key", direction: ASC)
 }
 
 input CreateMenuSectionInput {
     name: String! @rules(apply: ["required", "string", "max:255"])
 
-    menuItems: [CreateMenuItemInput!]! @rulesForArray(apply: ["required"]) @setSortKeys @create
+    menuItems: [CreateMenuItemInput!]!
+        @rulesForArray(apply: ["required"])
+        @setSortKeys
+        @create
 }
 
 input UpdateMenuSectionInput {
@@ -20,5 +25,8 @@ input UpdateMenuSectionInput {
 
     name: String!
 
-    menuItems: [UpdateMenuItemInput!]! @rulesForArray(apply: ["required"]) @setSortKeys @upsertSync
+    menuItems: [UpdateMenuItemInput!]!
+        @rulesForArray(apply: ["required"])
+        @setSortKeys
+        @upsertSync
 }

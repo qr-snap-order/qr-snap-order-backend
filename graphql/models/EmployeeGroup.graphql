@@ -3,11 +3,15 @@ type EmployeeGroup {
 
     name: String!
 
-    employees: [Employee!]! @belongsToMany @orderBy(column: "id", direction: ASC)
+    employees: [Employee!]!
+        @belongsToMany
+        @orderBy(column: "id", direction: ASC)
 }
 
 extend type Query @guard {
-    employeeGroups: [EmployeeGroup!]! @all @orderBy(column: "id", direction: ASC)
+    employeeGroups: [EmployeeGroup!]!
+        @all
+        @orderBy(column: "id", direction: ASC)
 
     employeeGroup(
         id: ID! @eq @rules(apply: ["required", "uuid"])
@@ -24,7 +28,8 @@ extend type Mutation @guard {
     updateEmployeeGroup(
         id: ID! @rules(apply: ["required", "uuid"])
 
-        name: String @rules(apply: ["sometimes", "required", "string", "max:255"])
+        name: String
+            @rules(apply: ["sometimes", "required", "string", "max:255"])
 
         employees: [ID!]! @rules(apply: ["required", "uuid"]) @connectSync
     ): EmployeeGroup! @update

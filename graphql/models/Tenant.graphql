@@ -11,7 +11,5 @@ type Tenant {
 }
 
 extend type Query {
-    tenant(
-        id: ID! @eq @rules(apply: ["required", "uuid"])
-    ): Tenant @find
+    tenant(id: ID! @eq @rules(apply: ["required", "uuid"])): Tenant @find
 }

@@ -7,41 +7,56 @@ type Shop {
 
     tenant: Tenant!
 
-    employees: [Employee!]! @belongsToMany @orderBy(column: "id", direction: ASC)
+    employees: [Employee!]!
+        @belongsToMany
+        @orderBy(column: "id", direction: ASC)
 
-    shopGroups: [ShopGroup!]! @belongsToMany @orderBy(column: "id", direction: ASC)
+    shopGroups: [ShopGroup!]!
+        @belongsToMany
+        @orderBy(column: "id", direction: ASC)
 
-    shopTables: [ShopTable!]! @belongsToMany @orderBy(column: "id", direction: ASC)
+    shopTables: [ShopTable!]!
+        @belongsToMany
+        @orderBy(column: "id", direction: ASC)
 }
 
 extend type Query @guard {
     shops: [Shop!]! @all @orderBy(column: "id", direction: ASC)
 
-    shop(
-        id: ID! @eq @rules(apply: ["required", "uuid"])
-    ): Shop @find
+    shop(id: ID! @eq @rules(apply: ["required", "uuid"])): Shop @find
 }
 
 extend type Mutation @guard {
     createShop(
         name: String! @rules(apply: ["required", "string", "max:255"])
 
-        employees: [ID!]! @rules(apply: ["required", "uuid", "exists:employees,id"]) @rulesForArray(apply: ["max:1024"]) @connectSync
+        employees: [ID!]!
+            @rules(apply: ["required", "uuid", "exists:employees,id"])
+            @rulesForArray(apply: ["max:1024"])
+            @connectSync
 
-        shopGroups: [ID!]! @rules(apply: ["required", "uuid", "exists:shop_groups,id"]) @rulesForArray(apply: ["max:1024"]) @connectSync
+        shopGroups: [ID!]!
+            @rules(apply: ["required", "uuid", "exists:shop_groups,id"])
+            @rulesForArray(apply: ["max:1024"])
+            @connectSync
     ): Shop! @create
 
     updateShop(
         id: ID! @rules(apply: ["required", "uuid"])
 
-        name: String @rules(apply: ["sometimes", "required", "string", "max:255"])
+        name: String
+            @rules(apply: ["sometimes", "required", "string", "max:255"])
 
-        employees: [ID!] @rules(apply: ["required", "uuid", "exists:employees,id"]) @rulesForArray(apply: ["max:1024"]) @connectSync
+        employees: [ID!]
+            @rules(apply: ["required", "uuid", "exists:employees,id"])
+            @rulesForArray(apply: ["max:1024"])
+            @connectSync
 
-        shopGroups: [ID!] @rules(apply: ["required", "uuid", "exists:shop_groups,id"]) @rulesForArray(apply: ["max:1024"]) @connectSync
+        shopGroups: [ID!]
+            @rules(apply: ["required", "uuid", "exists:shop_groups,id"])
+            @rulesForArray(apply: ["max:1024"])
+            @connectSync
     ): Shop! @update
 
-    deleteShop(
-        id: ID! @eq @rules(apply: ["required", "uuid"])
-    ): Shop! @delete
+    deleteShop(id: ID! @eq @rules(apply: ["required", "uuid"])): Shop! @delete
 }

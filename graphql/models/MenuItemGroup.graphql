@@ -9,16 +9,23 @@ type MenuItemGroup {
 }
 
 extend type Query @guard {
-    menuItemGroups: [MenuItemGroup!]! @all @orderBy(column: "id", direction: ASC)
+    menuItemGroups: [MenuItemGroup!]!
+        @all
+        @orderBy(column: "id", direction: ASC)
 
-    menuItemGroup(id: ID! @eq @rules(apply: ["required", "uuid"])): MenuItemGroup @find
+    menuItemGroup(
+        id: ID! @eq @rules(apply: ["required", "uuid"])
+    ): MenuItemGroup @find
 }
 
 extend type Mutation @guard {
     createMenuItemGroup(
         name: String! @rules(apply: ["required", "string", "max:255"])
 
-        menuItems: [ID!]! @rules(apply: ["required", "uuid"]) @rulesForArray(apply: ["max:1024"]) @connectSync
+        menuItems: [ID!]!
+            @rules(apply: ["required", "uuid"])
+            @rulesForArray(apply: ["max:1024"])
+            @connectSync
     ): MenuItemGroup! @create
 
     updateMenuItemGroup(
@@ -27,9 +34,13 @@ extend type Mutation @guard {
         name: String
             @rules(apply: ["sometimes", "required", "string", "max:255"])
 
-        menuItems: [ID!] @rules(apply: ["required", "uuid"]) @rulesForArray(apply: ["max:1024"]) @connectSync
+        menuItems: [ID!]
+            @rules(apply: ["required", "uuid"])
+            @rulesForArray(apply: ["max:1024"])
+            @connectSync
     ): MenuItemGroup! @update
 
-    deleteMenuItemGroup(id: ID! @eq @rules(apply: ["required", "uuid"])): MenuItemGroup!
-        @delete
+    deleteMenuItemGroup(
+        id: ID! @eq @rules(apply: ["required", "uuid"])
+    ): MenuItemGroup! @delete
 }
