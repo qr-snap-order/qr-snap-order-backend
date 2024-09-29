@@ -28,23 +28,22 @@ input CreateMenuItemInput {
     menuItemGroups: [ID!]! @rules(apply: ["required", "uuid"]) @connectSync
 }
 
-input UpdateMenuItemInput {
-    """
-    指定なし、もしくは指定されたIDに対応するレコードがない場合は追加。
-    """
+input UpsertMenuItemInput {
     id: ID @rules(apply: ["sometimes", "required", "uuid"])
 
-    name: String @rules(apply: ["sometimes", "required", "string", "max:255"])
+    name: String! @rules(apply: ["required", "string", "max:255"])
 
     """
     税抜価格
     """
-    price: Int
-        @rules(apply: ["sometimes", "required", "integer", "between:0,1000000"])
+    price: Int! @rules(apply: ["required", "integer", "between:0,1000000"])
 
     image: Upload
         @upload(disk: "s3", path: "menu-item/image", public: true)
         @rules(apply: ["nullable", "image", "max:2048"])
 
-    menuItemGroups: [ID!] @rules(apply: ["required", "uuid"]) @connectSync
+    menuItemGroups: [ID!]
+        @rules(apply: ["required", "uuid", "exists:menu_item_groups,id"])
+        @rulesForArray(apply: ["max:1024"])
+        @connectSync
 }

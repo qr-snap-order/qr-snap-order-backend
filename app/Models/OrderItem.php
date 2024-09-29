@@ -43,10 +43,11 @@ class OrderItem extends Model
         });
 
         static::creating(function (self $orderItem) {
-            // TODO:: キャッシュで効率化（Tenantコンテキストに読み込むのかモデルクラスにキャッシュ機能を実装するのか）
-            $firstOrderItemStatus = OrderItemStatus::whereSortKey(1)->firstOrFail();
+            if ($orderItem->order_item_status_id === null) {
+                $firstOrderItemStatus = OrderItemStatus::whereSortKey(1)->firstOrFail();
 
-            $orderItem->orderItemStatus()->associate($firstOrderItemStatus);
+                $orderItem->orderItemStatus()->associate($firstOrderItemStatus);
+            }
         });
 
         static::saved(function (self $orderItem) {

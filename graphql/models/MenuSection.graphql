@@ -17,16 +17,13 @@ input CreateMenuSectionInput {
         @create
 }
 
-input UpdateMenuSectionInput {
-    """
-    指定なし、もしくは指定されたIDに対応するレコードがない場合は追加。
-    """
+input UpsertMenuSectionInput {
     id: ID @rules(apply: ["sometimes", "required", "uuid"])
 
-    name: String!
+    name: String! @rules(apply: ["required", "string", "max:255"])
 
-    menuItems: [UpdateMenuItemInput!]!
-        @rulesForArray(apply: ["required"])
+    menuItems: [UpsertMenuItemInput!]
+        @rulesForArray(apply: ["max:1024"])
         @setSortKeys
         @upsertSync
 }

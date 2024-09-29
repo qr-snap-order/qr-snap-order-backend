@@ -30,8 +30,8 @@ extend type Mutation @guard {
         name: String
             @rules(apply: ["sometimes", "required", "string", "max:255"])
 
-        menuSections: [UpdateMenuSectionInput]
-            @rulesForArray(apply: ["sometimes", "required"])
+        menuSections: [UpsertMenuSectionInput]
+            @rulesForArray(apply: ["max:1024"])
             @setSortKeys
             @upsertSync
     ): Menu! @update

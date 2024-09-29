@@ -42,7 +42,9 @@ test('updateOrder mutation', function () {
         ->has(OrderItemHistory::factory()->for($tenant)->for($orderItemStatuses[0])->for($user, 'userable'))
         ->createQuietly();
 
-    $response = $this->domain($tenant)->actingAs($user)->graphQL(/** @lang GraphQL */ <<<GRAPHQL
+    $response = $this->domain($tenant)->actingAs($user)->graphQL(
+        /** @lang GraphQL */
+        <<<GRAPHQL
             mutation {
                 updateOrder(
                     id: "{$order->id}"
