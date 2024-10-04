@@ -15,7 +15,7 @@ beforeEach(function () {
      * - ID: 1 => Laravel Personal Access Client
      * - ID: 2 => Laravel Password Grant Client
      */
-    $this->artisan('passport:install')->assertExitCode(0);
+    $this->withoutMockingConsoleOutput()->artisan('passport:install', ['--no-interaction' => true]);
 
     /**
      * LighthouseGraphQLPassportの設定

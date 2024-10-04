@@ -4,14 +4,18 @@ setup:
 	cp .env.example .env
 	@make composer-install
 	@make up
-	@make ide-helper
+	@make composer-dump
 	@make migrate
 	@make seed
+	@make ide-helper
 	@make s3-create-bucket
 	@make passport-install
 
 composer-install:
 	docker run --rm -u "$$(id -u):$$(id -g)" -v "$$(pwd):/var/www/html" -w /var/www/html laravelsail/php82-composer:latest composer install --ignore-platform-reqs
+
+composer-dump:
+	./vendor/bin/sail composer dump-autoload
 
 ide-helper:
 	./vendor/bin/sail artisan ide-helper:generate
@@ -21,7 +25,7 @@ ide-helper:
 
 passport-install:
 	# Please set client secret to .env
-	./vendor/bin/sail artisan passport:install
+	./vendor/bin/sail artisan passport:install --no-interaction
 
 # コンテナ操作系コマンド
 
